@@ -1,0 +1,431 @@
+.contactSection {
+  --contact-background: #000000;
+  --contact-cream: #f4eee9;
+  --contact-gold: #b99139;
+
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 720px;
+  overflow: hidden;
+  background: var(--contact-background);
+  color: var(--contact-cream);
+}
+
+.contactStage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--contact-background);
+}
+
+.contactBackground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--contact-background);
+  transform: translate3d(0, 100%, 0);
+  will-change: transform;
+  z-index: 5;
+}
+
+.imageFrame {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 100vw;
+  height: 100svh;
+  transform: translateX(-50%);
+  overflow: hidden;
+  z-index: 10;
+  will-change: width, height, transform;
+}
+
+.imageCanvas {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 100vw;
+  height: 100svh;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.contactImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.27);
+}
+
+.topInterface {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+}
+
+.circularBrand {
+  position: absolute;
+  left: clamp(28px, 5vw, 90px);
+  top: clamp(30px, 6vh, 85px);
+  width: clamp(82px, 8vw, 135px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 238, 233, 0.52);
+  border-radius: 999px;
+  color: var(--contact-cream);
+  pointer-events: auto;
+}
+
+.circularText {
+  position: absolute;
+  inset: 9px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(244, 238, 233, 0.2);
+  border-radius: inherit;
+  font-size: clamp(6px, 0.48vw, 8px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(244, 238, 233, 0.72);
+}
+
+.circularCore {
+  position: relative;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(18px, 2vw, 31px);
+  line-height: 1;
+}
+
+.topCta {
+  position: absolute;
+  right: clamp(28px, 4.5vw, 80px);
+  top: clamp(30px, 5vh, 75px);
+  width: clamp(150px, 14vw, 250px);
+  display: grid;
+  gap: 5px;
+  text-align: right;
+  text-transform: uppercase;
+  pointer-events: auto;
+}
+
+.ctaEyebrow,
+.ctaLinks {
+  color: rgba(244, 238, 233, 0.76);
+  font-size: clamp(9px, 0.7vw, 12px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.ctaTitle {
+  color: var(--contact-cream);
+  font-size: clamp(17px, 1.55vw, 28px);
+  font-weight: 900;
+  line-height: 0.95;
+}
+
+.ctaLinks {
+  display: inline-flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.ctaLinks a,
+.bottomLeft a,
+.bottomRight a,
+.phoneNumber,
+.backToTop {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ctaLinks a:focus-visible,
+.bottomLeft a:focus-visible,
+.bottomRight a:focus-visible,
+.phoneNumber:focus-visible,
+.backToTop:focus-visible {
+  outline: 2px solid var(--contact-cream);
+  outline-offset: 5px;
+}
+
+.mainContent {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: min(900px, 80vw);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 20;
+}
+
+.contactOrnament {
+  margin: 0 auto;
+  width: fit-content;
+  color: var(--contact-gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 3vw, 55px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.phoneNumber {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: clamp(18px, 2vh, 28px);
+  color: var(--contact-cream);
+  font-family: var(--font-display-serif), "Cormorant Garamond", "Times New Roman", serif;
+  font-size: clamp(62px, 9vw, 170px);
+  font-weight: 400;
+  line-height: 0.82;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.phoneCharacterWrapper {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.phoneCharacterGroup {
+  display: contents;
+}
+
+.phoneCharacter {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.mobileLineBreak {
+  display: none;
+}
+
+.officeAddress {
+  display: grid;
+  gap: 4px;
+  margin: clamp(22px, 3vh, 38px) auto 0;
+  color: rgba(244, 238, 233, 0.76);
+  font-style: normal;
+  font-size: clamp(10px, 0.8vw, 14px);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.sideProgress {
+  position: absolute;
+  left: clamp(32px, 7vw, 120px);
+  top: 34%;
+  height: clamp(180px, 28vh, 290px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  gap: 14px;
+  z-index: 20;
+  color: rgba(244, 238, 233, 0.82);
+}
+
+.progressLine {
+  width: 1px;
+  height: 100%;
+  background: rgba(244, 238, 233, 0.68);
+}
+
+.progressValue {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.backToTop {
+  position: absolute;
+  left: clamp(32px, 7vw, 120px);
+  bottom: clamp(24px, 5vh, 60px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--contact-cream);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  z-index: 20;
+}
+
+.bottomLeft,
+.bottomRight {
+  position: absolute;
+  bottom: clamp(24px, 5vh, 60px);
+  z-index: 20;
+  color: rgba(244, 238, 233, 0.82);
+  font-size: clamp(9px, 0.65vw, 12px);
+  font-weight: 600;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.bottomLeft {
+  left: clamp(88px, 10vw, 180px);
+  display: grid;
+  gap: 2px;
+}
+
+.bottomRight {
+  right: clamp(100px, 18vw, 360px);
+  text-align: right;
+}
+
+.policyLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 1180px) {
+  .phoneNumber {
+    font-size: clamp(58px, 10vw, 118px);
+  }
+
+  .bottomLeft {
+    left: clamp(132px, 18vw, 260px);
+  }
+
+  .bottomRight {
+    right: clamp(72px, 10vw, 180px);
+  }
+}
+
+@media (max-width: 767px) {
+  .contactSection {
+    min-height: 640px;
+  }
+
+  .circularBrand {
+    left: 18px;
+    top: 18px;
+    width: 68px;
+  }
+
+  .circularText {
+    inset: 6px;
+    font-size: 5px;
+  }
+
+  .topCta {
+    right: 18px;
+    top: 20px;
+    width: 148px;
+    gap: 3px;
+  }
+
+  .ctaEyebrow,
+  .ctaLinks {
+    font-size: 8px;
+  }
+
+  .ctaTitle {
+    font-size: 18px;
+  }
+
+  .mainContent {
+    top: 55%;
+    width: min(330px, 88vw);
+  }
+
+  .contactOrnament {
+    font-size: 25px;
+  }
+
+  .phoneNumber {
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: clamp(52px, 15.5vw, 72px);
+    line-height: 0.9;
+    white-space: normal;
+  }
+
+  .mobileLineBreak {
+    display: block;
+    flex-basis: 100%;
+    width: 100%;
+    height: 0;
+  }
+
+  .mobileHiddenSpace {
+    display: none;
+  }
+
+  .officeAddress {
+    margin-top: 20px;
+    font-size: 10px;
+  }
+
+  .sideProgress {
+    left: 18px;
+    top: auto;
+    bottom: 120px;
+    height: 72px;
+  }
+
+  .progressValue {
+    font-size: 8px;
+  }
+
+  .backToTop {
+    left: 17px;
+    bottom: 16px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 8px;
+  }
+
+  .bottomLeft,
+  .bottomRight {
+    bottom: 22px;
+    font-size: 9px;
+    line-height: 1.45;
+  }
+
+  .bottomLeft {
+    left: 72px;
+    right: 72px;
+  }
+
+  .bottomRight {
+    left: 72px;
+    right: 18px;
+    bottom: 72px;
+    text-align: left;
+    transform: none;
+  }
+
+  .policyLinks {
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contactBackground {
+    transform: translate3d(0, 0, 0);
+  }
+}

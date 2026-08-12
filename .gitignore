@@ -1,0 +1,15 @@
+node_modules
+.next
+.codex
+out
+dist
+build
+.env
+.env.*
+!.env.example
+*.log
+test-results
+playwright-report
+playwright-*.png
+.DS_Store
+Thumbs.db

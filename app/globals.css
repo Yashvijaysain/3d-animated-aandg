@@ -1,0 +1,583 @@
+:root {
+  color-scheme: dark;
+  background: #000000;
+  color: #ffffff;
+  --font-heading: Arial, Helvetica, sans-serif;
+  --font-body: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: clip;
+  background: #000000;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+body :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-heading);
+}
+
+body :is(p, a, button, input, textarea, li, dd, dt) {
+  font-family: var(--font-body);
+}
+
+html.ag-loader-running,
+html.ag-loader-running body {
+  overflow: hidden;
+}
+
+html.ag-loader-running [data-ag-loader-hero-content] {
+  opacity: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#sectionPin {
+  position: relative;
+  z-index: 20;
+  height: 650vh;
+  overflow: visible;
+  margin-top: -1px;
+  background: #ffffff;
+}
+
+.pin-wrap-sticky {
+  background: #ffffff;
+}
+
+.pin-wrap-sticky {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow-x: hidden;
+}
+
+.pin-wrap {
+  width: max(205vmax, 2440px);
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  gap: clamp(3rem, 6vw, 6.5rem);
+  padding-left: 10vw;
+  padding-right: 12vw;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+#projects {
+  min-height: 220vh;
+  overflow: visible;
+  background: #ffffff;
+}
+
+.pin-wrap-sticky {
+  background: #ffffff;
+}
+
+.project-section-intro {
+  width: clamp(360px, 34vw, 560px);
+  flex: 0 0 auto;
+  color: #000000;
+}
+
+.project-section-intro span {
+  display: block;
+  margin-bottom: 1rem;
+  color: #e6e6e6;
+  font-size: clamp(0.72rem, 0.7vw, 0.86rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.project-section-intro h2 {
+  max-width: 10.5ch;
+  margin: 0;
+  font-size: clamp(3.6rem, 6vw, 6.2rem);
+  font-weight: 900;
+  line-height: 0.96;
+  padding-bottom: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(300px, 22vw, 380px);
+  height: clamp(500px, 66vh, 590px);
+  overflow: hidden;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 30px;
+  box-shadow:
+    0 42px 92px rgba(10, 9, 7, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(18px) saturate(1.25);
+  isolation: isolate;
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+}
+
+.defaultFace,
+.hoverFace {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.defaultFace {
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.28);
+  transform-origin: center;
+}
+
+.hoverFace {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  color: #111111;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(22px) saturate(1.2);
+  visibility: hidden;
+}
+
+.project-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1);
+}
+
+.project-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.02) 20%,
+      rgba(0, 0, 0, 0.18) 48%,
+      rgba(0, 0, 0, 0.82) 100%
+    );
+}
+
+.project-content {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 3;
+  display: grid;
+  gap: 0.72rem;
+  padding: 24px 24px 20px;
+  color: #ffffff;
+}
+
+.project-dots {
+  display: flex;
+  gap: 0.28rem;
+}
+
+.project-dots span {
+  width: 0.28rem;
+  height: 0.28rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.project-heading {
+  position: relative;
+  display: block;
+  padding-top: 0.2rem;
+}
+
+.project-logo {
+  width: clamp(54px, 5vw, 76px);
+  height: auto;
+  max-height: 32px;
+  display: block;
+  object-fit: contain;
+  object-position: left center;
+  filter: brightness(0) invert(1);
+}
+
+.project-heading h2 {
+  display: block;
+  margin: 0.22rem 0 0;
+  overflow: visible;
+  font-size: clamp(2.25rem, 2.75vw, 3rem);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  padding-bottom: 0.16em;
+  clip-path: none !important;
+}
+
+.price-pill {
+  position: absolute;
+  top: -2.45rem;
+  right: 0;
+  max-width: 9.5rem;
+  padding: 0.42rem 0.65rem;
+  color: #000000;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 999px;
+  font-size: clamp(0.62rem, 0.72vw, 0.74rem);
+  font-weight: 900;
+  line-height: 1.05;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.project-description {
+  display: -webkit-box;
+  max-width: 32ch;
+  margin: 0;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(0.82rem, 0.86vw, 0.96rem);
+  font-weight: 600;
+  line-height: 1.32;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.project-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.48rem;
+}
+
+.badge {
+  max-width: 100%;
+  padding: 0.44rem 0.66rem;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+}
+
+.project-cta {
+  width: 100%;
+  min-height: 52px;
+  display: grid;
+  place-items: center;
+  color: #000000;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px) saturate(1.18);
+}
+
+.hoverImage {
+  position: relative;
+  width: 100%;
+  height: 43%;
+  min-height: 205px;
+  overflow: hidden;
+  border-radius: 24px;
+  flex-shrink: 0;
+  background: rgba(230, 227, 220, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.46);
+}
+
+.hoverImageScale {
+  position: absolute;
+  inset: 0;
+}
+
+.hoverImage img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.hoverCopy {
+  margin-top: 16px;
+}
+
+.hoverCopy h2 {
+  display: block;
+  margin: 0;
+  overflow: visible;
+  color: #111111;
+  font-size: clamp(1.42rem, 1.72vw, 1.82rem);
+  font-weight: 900;
+  line-height: 1.04;
+  padding-bottom: 0.08em;
+  text-transform: uppercase;
+}
+
+.hoverPrice {
+  margin: 0.34rem 0 0;
+  color: #535353;
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.hoverDescription {
+  display: -webkit-box;
+  margin: 0.72rem 0 0;
+  overflow: hidden;
+  color: #555555;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.34;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.infoBox {
+  min-height: 62px;
+  padding: 10px 8px;
+  border-radius: 16px;
+  background: rgba(242, 242, 240, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px) saturate(1.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.infoLabel {
+  color: #737373;
+  font-size: 0.58rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.infoValue {
+  display: -webkit-box;
+  margin-top: 4px;
+  overflow: hidden;
+  color: #111111;
+  font-size: clamp(0.64rem, 0.78vw, 0.78rem);
+  font-weight: 900;
+  line-height: 1.12;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.hoverAction {
+  margin-top: auto;
+}
+
+.hoverCta {
+  min-height: 50px;
+  margin-top: 12px;
+  color: #000000;
+  background: rgba(178, 142, 59, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 18px;
+}
+
+@media (min-width: 700px) and (max-width: 1099px) {
+  .pin-wrap {
+    width: max(218vmax, 2140px);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    padding-left: 8vw;
+  }
+
+  .project-section-intro {
+    width: clamp(300px, 40vw, 420px);
+  }
+
+  .project-section-intro h2 {
+    max-width: 10.5ch;
+    font-size: clamp(3.2rem, 8vw, 5.2rem);
+  }
+
+  .project-card {
+    width: clamp(300px, 38vw, 370px);
+  }
+}
+
+@media (max-width: 699px) {
+  #sectionPin {
+    height: 470vh;
+  }
+
+  .pin-wrap {
+    width: max(540vw, 1900px);
+    gap: 1.25rem;
+    padding-left: 7vw;
+    padding-right: 16vw;
+  }
+
+  .project-section-intro {
+    width: 82vw;
+  }
+
+  .project-section-intro h2 {
+    max-width: 10.5ch;
+    font-size: clamp(2.8rem, 15vw, 4.2rem);
+    line-height: 0.98;
+  }
+
+  .project-card {
+    width: 86vw;
+    height: min(590px, 76dvh);
+    border-radius: 32px;
+  }
+
+  .project-content {
+    padding: 1.2rem 1rem 1rem;
+    gap: 0.62rem;
+  }
+
+  .project-heading {
+    padding-top: 0;
+  }
+
+  .project-logo {
+    width: 58px;
+    max-height: 28px;
+  }
+
+  .price-pill {
+    max-width: 7.6rem;
+    top: -2.1rem;
+    padding: 0.44rem 0.58rem;
+    font-size: 0.58rem;
+  }
+
+  .project-heading h2 {
+    margin-top: 0.28rem;
+    font-size: clamp(1.9rem, 10.4vw, 2.55rem);
+    line-height: 1;
+  }
+
+  .project-description {
+    max-width: 30ch;
+    font-size: 0.78rem;
+    line-height: 1.28;
+  }
+
+  .badge {
+    padding: 0.42rem 0.58rem;
+    font-size: 0.58rem;
+  }
+
+  .project-cta {
+    min-height: 2.9rem;
+  }
+
+  .hoverFace {
+    padding: 10px;
+  }
+
+  .hoverImage {
+    height: 40%;
+    min-height: 180px;
+    border-radius: 20px;
+  }
+
+  .hoverCopy {
+    margin-top: 12px;
+  }
+
+  .hoverCopy h2 {
+    font-size: clamp(1.3rem, 7.2vw, 1.78rem);
+  }
+
+  .hoverPrice {
+    font-size: 0.9rem;
+  }
+
+  .hoverDescription {
+    margin-top: 0.55rem;
+    font-size: 0.76rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 2;
+  }
+
+  .infoBox {
+    min-height: 58px;
+    padding: 9px 7px;
+  }
+
+  .infoValue {
+    font-size: 0.68rem;
+  }
+
+  .hoverCta {
+    min-height: 2.8rem;
+    margin-top: 10px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .project-card {
+    background: rgba(255, 255, 255, 0.14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sectionPin {
+    height: auto;
+  }
+
+  .pin-wrap-sticky {
+    position: relative;
+    height: auto;
+    overflow-x: auto;
+  }
+
+  .pin-wrap {
+    height: auto;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    animation: none;
+  }
+}
