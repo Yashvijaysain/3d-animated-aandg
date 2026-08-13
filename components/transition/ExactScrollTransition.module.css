@@ -403,6 +403,10 @@
     width: min(42vw, 34svh);
   }
 
+  .imageWindow img {
+    object-fit: contain;
+  }
+
   .statementText {
     padding: 28px;
     font-size: clamp(16px, 4.2vw, 22px);
