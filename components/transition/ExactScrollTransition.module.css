@@ -392,15 +392,18 @@
   }
 
   .imageWindowOne {
-    width: min(84vw, 68svh);
+    width: min(58vw, 42svh);
+    aspect-ratio: 9 / 16;
   }
 
   .imageWindowTwo {
-    width: min(62vw, 50svh);
+    width: min(43vw, 32svh);
+    aspect-ratio: 9 / 16;
   }
 
   .imageWindowThree {
-    width: min(42vw, 34svh);
+    width: min(30vw, 22svh);
+    aspect-ratio: 9 / 16;
   }
 
   .imageWindow img {
