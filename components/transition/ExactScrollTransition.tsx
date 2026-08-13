@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,6 +11,17 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ExactScrollTransition() {
   const container = useRef<HTMLElement | null>(null);
+  const [usePhoneImages, setUsePhoneImages] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 684px)");
+    const syncImageSet = () => setUsePhoneImages(mediaQuery.matches);
+
+    syncImageSet();
+    mediaQuery.addEventListener("change", syncImageSet);
+
+    return () => mediaQuery.removeEventListener("change", syncImageSet);
+  }, []);
 
   useGSAP(
     () => {
@@ -242,15 +253,15 @@ export default function ExactScrollTransition() {
 
         <div className={styles.redCurtain}>
           <div className={`${styles.imageWindow} ${styles.imageWindowOne}`}>
-            <Image src="/transition/project02.png" alt="" fill sizes="100vw" priority />
+            <Image src={usePhoneImages ? "/transition/project02phone.png" : "/transition/project02.png"} alt="" fill sizes="100vw" priority />
           </div>
 
           <div className={`${styles.imageWindow} ${styles.imageWindowTwo}`}>
-            <Image src="/transition/project03.png" alt="" fill sizes="70vw" priority />
+            <Image src={usePhoneImages ? "/transition/project03phone.png" : "/transition/project03.png"} alt="" fill sizes="70vw" priority />
           </div>
 
           <div className={`${styles.imageWindow} ${styles.imageWindowThree}`}>
-            <Image src="/transition/project01.png" alt="" fill sizes="50vw" priority />
+            <Image src={usePhoneImages ? "/transition/project01phone.png" : "/transition/project01.png"} alt="" fill sizes="50vw" priority />
           </div>
 
           <div className={styles.redSplitOverlay} aria-hidden="true">
