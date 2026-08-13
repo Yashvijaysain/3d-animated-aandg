@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
+import NextImage from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -9,328 +9,200 @@ import styles from "./ExactScrollTransition.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+const FRAME_COUNT = 300;
+const DESKTOP_FRAME_PATH = "/transition/ezgif-frame-";
+const PHONE_FRAME_PATH = "/transition_phone/ezgif-frame-";
+const PHONE_BREAKPOINT = 642;
+
+const getFrameSrc = (frame: number, usePhoneFrames: boolean) => {
+  const path = usePhoneFrames ? PHONE_FRAME_PATH : DESKTOP_FRAME_PATH;
+
+  return `${path}${String(frame).padStart(3, "0")}.png`;
+};
+
+const drawCover = (
+  context: CanvasRenderingContext2D,
+  image: HTMLImageElement,
+  width: number,
+  height: number
+) => {
+  const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
+  const drawWidth = image.naturalWidth * scale;
+  const drawHeight = image.naturalHeight * scale;
+  const offsetX = (width - drawWidth) / 2;
+  const offsetY = (height - drawHeight) / 2;
+
+  context.clearRect(0, 0, width, height);
+  context.drawImage(image, offsetX, offsetY, drawWidth, drawHeight);
+};
+
 export default function ExactScrollTransition() {
-  const container = useRef<HTMLElement | null>(null);
-  const [usePhoneImages, setUsePhoneImages] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const imagesRef = useRef<Array<HTMLImageElement | undefined>>([]);
+  const activeFrameRef = useRef(1);
+  const renderFrameRef = useRef<((frame: number) => void) | null>(null);
+  const usePhoneFramesRef = useRef(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 684px)");
-    const syncImageSet = () => setUsePhoneImages(mediaQuery.matches);
+    const canvas = canvasRef.current;
 
-    syncImageSet();
-    mediaQuery.addEventListener("change", syncImageSet);
+    if (!canvas) {
+      return;
+    }
 
-    return () => mediaQuery.removeEventListener("change", syncImageSet);
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      return;
+    }
+
+    let disposed = false;
+    const images = imagesRef.current;
+
+    const loadFrames = (usePhoneFrames: boolean) => {
+      images.length = 0;
+
+      for (let frame = 1; frame <= FRAME_COUNT; frame += 1) {
+        const image = new Image();
+        image.decoding = "async";
+        image.src = getFrameSrc(frame, usePhoneFrames);
+        image.onload = () => {
+          if (!disposed) {
+            renderFrame(activeFrameRef.current);
+          }
+        };
+        images[frame] = image;
+      }
+    };
+
+    const renderFrame = (frame: number) => {
+      activeFrameRef.current = Math.min(FRAME_COUNT, Math.max(1, frame));
+      const image = images[activeFrameRef.current];
+
+      if (!image?.complete || image.naturalWidth === 0) {
+        return;
+      }
+
+      drawCover(context, image, window.innerWidth, window.innerHeight);
+    };
+
+    const setCanvasSize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = Math.round(window.innerWidth);
+      const height = Math.round(window.innerHeight);
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const shouldUsePhoneFrames = width < PHONE_BREAKPOINT;
+
+      if (shouldUsePhoneFrames !== usePhoneFramesRef.current || images.length === 0) {
+        usePhoneFramesRef.current = shouldUsePhoneFrames;
+        loadFrames(shouldUsePhoneFrames);
+      }
+
+      renderFrame(activeFrameRef.current);
+    };
+
+    renderFrameRef.current = renderFrame;
+    setCanvasSize();
+
+    window.addEventListener("resize", setCanvasSize);
+
+    return () => {
+      disposed = true;
+      renderFrameRef.current = null;
+      window.removeEventListener("resize", setCanvasSize);
+    };
   }, []);
 
   useGSAP(
     () => {
-      const section = container.current;
+      const section = sectionRef.current;
 
       if (!section) {
         return;
       }
 
       const selector = gsap.utils.selector(section);
-      const redCurtain = selector(`.${styles.redCurtain}`);
-      const heroOverlay = selector(`.${styles.heroOverlay}`);
-      const heroContent = selector(`.${styles.heroContent}`);
-      const windowOne = selector(`.${styles.imageWindowOne}`);
-      const windowTwo = selector(`.${styles.imageWindowTwo}`);
-      const windowThree = selector(`.${styles.imageWindowThree}`);
-      const windowOneImage = selector(`.${styles.imageWindowOne} img`);
-      const windowTwoImage = selector(`.${styles.imageWindowTwo} img`);
-      const windowThreeImage = selector(`.${styles.imageWindowThree} img`);
-      const redTextPanel = selector(`.${styles.redTextPanel}`);
-      const redHalfLeft = selector(`.${styles.redHalfLeft}`);
-      const redHalfRight = selector(`.${styles.redHalfRight}`);
+      const heroLogo = selector(`.${styles.heroLogo}`);
+      let renderQueued = false;
+      const playhead = { frame: 1 };
+
+      const queueRender = () => {
+        if (renderQueued) {
+          return;
+        }
+
+        renderQueued = true;
+        requestAnimationFrame(() => {
+          renderQueued = false;
+          renderFrameRef.current?.(Math.round(playhead.frame));
+        });
+      };
 
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      gsap.set(redCurtain, {
-        autoAlpha: reduced ? 1 : 0,
-        clipPath: reduced ? "inset(0% 0% 0% 0%)" : "inset(100% 49.97% 0% 49.9701%)"
-      });
-      gsap.set(heroOverlay, { opacity: reduced ? 0.32 : 0.5 });
-      gsap.set(heroContent, { opacity: reduced ? 0 : 1 });
-      gsap.set([windowOne, windowTwo, windowThree], {
-        autoAlpha: reduced ? 1 : 0,
-        scale: reduced ? 1 : 0.1,
-        transformOrigin: "50% 50%"
-      });
-      gsap.set([windowOneImage, windowTwoImage, windowThreeImage], { scale: 1.08 });
-      gsap.set(redTextPanel, {
-        autoAlpha: reduced ? 1 : 0,
+      gsap.set(heroLogo, {
+        autoAlpha: 1,
+        xPercent: -50,
+        y: 0,
         scale: 1,
-        transformOrigin: "50% 50%",
-        force3D: true
-      });
-      gsap.set(redHalfLeft, {
-        xPercent: reduced ? 0 : -100,
-        autoAlpha: reduced ? 0 : 1,
-        force3D: true
-      });
-      gsap.set(redHalfRight, {
-        xPercent: reduced ? 0 : 100,
-        autoAlpha: reduced ? 0 : 1,
+        transformOrigin: "50% 0%",
         force3D: true
       });
 
       if (reduced) {
+        activeFrameRef.current = FRAME_COUNT;
+        renderFrameRef.current?.(FRAME_COUNT);
         return;
       }
 
-      const buildTimeline = () => {
-        const tl = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${window.innerHeight * 6.2}`,
-            pin: true,
-            scrub: 0.5,
-            anticipatePin: 0.2,
-            invalidateOnRefresh: true
-          }
-        });
+      const timeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${window.innerHeight * 5}`,
+          pin: true,
+          scrub: 0.45,
+          anticipatePin: 0.2,
+          invalidateOnRefresh: true
+        }
+      });
 
-        tl.set(redCurtain, {
+      timeline
+        .to(playhead, {
+          frame: FRAME_COUNT,
+          duration: 1,
+          onUpdate: queueRender
+        }, 0)
+        .to(heroLogo, {
           autoAlpha: 0,
-          backgroundColor: "#ffffff",
-          clipPath: "inset(100% 49.97% 0% 49.9701%)"
-        })
-          .set([windowOne, windowTwo, windowThree], {
-            autoAlpha: 0,
-            scale: 0.1,
-            transformOrigin: "50% 50%"
-          })
-          .set([windowOneImage, windowTwoImage, windowThreeImage], {
-            scale: 1.08
-          })
-          .set(redTextPanel, {
-            autoAlpha: 0,
-            scale: 1,
-            transformOrigin: "50% 50%",
-            force3D: true
-          })
-          .set(redHalfLeft, {
-            xPercent: -100,
-            autoAlpha: 1,
-            force3D: true
-          })
-          .set(redHalfRight, {
-            xPercent: 100,
-            autoAlpha: 1,
-            force3D: true
-          })
-          .addLabel("hero", 0)
-          .addLabel("cleanHero", 0)
-          .to({}, { duration: 0.12 })
-          .set(redCurtain, {
-            autoAlpha: 1
-          })
-          .addLabel("lineDrawStart")
-          .to(redCurtain, {
-            clipPath: "inset(0% 49.97% 0% 49.9701%)",
-            duration: 0.35,
-            ease: "none"
-          })
-          .addLabel("fullHeightLine")
-          .to({}, { duration: 0.05 })
-          .to(
-            redCurtain,
-            {
-              clipPath: "inset(0% 0% 0% 0%)",
-              duration: 0.9,
-              ease: "none"
-            }
-          )
-          .addLabel("fullRedScreen")
-          .to(heroContent, { autoAlpha: 0, scale: 0.98, duration: 0.32 }, "fullHeightLine+=0.08")
-          .to(heroOverlay, { opacity: 0.72, duration: 0.9 }, "fullHeightLine+=0.05")
-          .addLabel("redScreen")
-          .set(windowOne, { autoAlpha: 1 })
-          .to(
-            windowOne,
-            {
-              scale: 1.1,
-              duration: 0.7
-            },
-            "redScreen"
-          )
-          .to(
-            windowOneImage,
-            {
-              scale: 1,
-              duration: 0.7
-            },
-            "redScreen"
-          )
-          .addLabel("firstImage")
-          .to(
-            windowOne,
-            {
-              scale: 1.32,
-              duration: 0.65
-            }
-          )
-          .set(windowTwo, { autoAlpha: 1 })
-          .to(
-            windowTwo,
-            {
-              scale: 0.65,
-              duration: 0.55
-            }
-          )
-          .to(
-            windowTwo,
-            {
-              scale: 1,
-              duration: 0.6
-            }
-          )
-          .to(windowTwoImage, { scale: 1, duration: 0.6 }, "<");
-
-        tl.set(windowThree, { autoAlpha: 1 }).to(
-            windowThree,
-            {
-              scale: 1.1,
-              duration: 0.6
-            }
-          )
-            .to(windowThreeImage, { scale: 1, duration: 0.6 }, "<")
-            .addLabel("nestedImages")
-            .set(redCurtain, {
-              backgroundColor: "#ffffff"
-            }, "nestedImages")
-            .to({}, { duration: 0.6 })
-            .addLabel("redSplitStart")
-            .to(redHalfLeft, {
-              xPercent: 0,
-              duration: 1,
-              ease: "power2.in",
-              force3D: true
-            }, "redSplitStart")
-            .to(redHalfRight, {
-              xPercent: 0,
-              duration: 1,
-              ease: "power2.in",
-              force3D: true
-            }, "redSplitStart")
-            .addLabel("redHalvesJoined")
-            .set(redTextPanel, {
-              autoAlpha: 1,
-              scale: 1
-            })
-            .set([redHalfLeft, redHalfRight], {
-              autoAlpha: 0
-            })
-            .addLabel("fullRedScene")
-            .to({}, { duration: 0.2 })
-            .addLabel("final");
-
-        return () => {
-          tl.scrollTrigger?.kill();
-          tl.kill();
-        };
-      };
-
-      const cleanup = buildTimeline();
+          xPercent: -50,
+          y: -12,
+          scale: 0.96,
+          duration: 0.12,
+          ease: "power2.in"
+        }, 0.88);
 
       return () => {
-        cleanup();
+        timeline.scrollTrigger?.kill();
+        timeline.kill();
       };
     },
-    { scope: container, dependencies: [], revertOnUpdate: true }
+    { scope: sectionRef, dependencies: [], revertOnUpdate: true }
   );
 
   return (
-    <section ref={container} id="home" className={styles.scrollSection}>
-      <div className={styles.stage}>
-        <div className={styles.heroScene} />
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent} data-ag-loader-hero-content />
-
-        <div className={styles.redCurtain}>
-          <div className={`${styles.imageWindow} ${styles.imageWindowOne}`}>
-            <Image src={usePhoneImages ? "/transition/project02phone.png" : "/transition/project02.png"} alt="" fill sizes="100vw" priority />
-          </div>
-
-          <div className={`${styles.imageWindow} ${styles.imageWindowTwo}`}>
-            <Image src={usePhoneImages ? "/transition/project03phone.png" : "/transition/project03.png"} alt="" fill sizes="70vw" priority />
-          </div>
-
-          <div className={`${styles.imageWindow} ${styles.imageWindowThree}`}>
-            <Image src={usePhoneImages ? "/transition/project01phone.png" : "/transition/project01.png"} alt="" fill sizes="50vw" priority />
-          </div>
-
-          <div className={styles.redSplitOverlay} aria-hidden="true">
-            <div className={`${styles.redHalf} ${styles.redHalfLeft}`}>
-              <div className={`${styles.redSceneSlice} ${styles.redSceneSliceLeft}`}>
-                <div className={styles.redStatementContent}>
-                  <div className={styles.statementText}>
-                    <p>WE SELL REAL ESTATE THAT</p>
-                    <p>EVOKES EMOTION. WE GIVE YOU A</p>
-                    <p>NEW SENSE OF SELF</p>
-                  </div>
-                  <div className={styles.redStatementDetails}>
-                    <p>A boutique agency specializing in premium</p>
-                    <p>residential and commercial real estate.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className={`${styles.redHalf} ${styles.redHalfRight}`}>
-              <div className={`${styles.redSceneSlice} ${styles.redSceneSliceRight}`}>
-                <div className={styles.redStatementContent}>
-                  <div className={styles.statementText}>
-                    <p>WE SELL REAL ESTATE THAT</p>
-                    <p>EVOKES EMOTION. WE GIVE YOU A</p>
-                    <p>NEW SENSE OF SELF</p>
-                  </div>
-                  <div className={styles.redStatementDetails}>
-                    <p>A boutique agency specializing in premium</p>
-                    <p>residential and commercial real estate.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.redTextPanel}>
-            <div className={styles.statementText}>
-              <p>WE SELL REAL ESTATE THAT</p>
-              <p>EVOKES EMOTION. WE GIVE YOU A</p>
-              <p>NEW SENSE OF SELF</p>
-            </div>
-            <div className={styles.redStatementDetails}>
-              <p>A boutique agency specializing in premium</p>
-              <p>residential and commercial real estate.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.fixedNavigation}>
-          <span>IN NAVIGATION</span>
-          <span>CONNECT + NAVIGATION</span>
-          <span>EN</span>
-        </div>
-        <div className={styles.fixedBrandMark}>
-          <Image
-            className={styles.logoImage}
-            src="/ag-logo.png"
-            alt="A&G"
-            width={420}
-            height={142}
-          />
-        </div>
-        <div className={styles.cornerInterface}>
-          <span>002</span>
-          <span>FAME PROJECT</span>
-        </div>
-        <div className={styles.centerGuides} aria-hidden="true" />
-
+    <section ref={sectionRef} id="home" className={styles.scrollSection}>
+      <canvas ref={canvasRef} className={styles.sequenceCanvas} aria-hidden="true" />
+      <div className={styles.heroLogo}>
+        <NextImage src="/ag-logo.png" alt="A&G Realtors" width={420} height={142} priority />
       </div>
     </section>
   );

@@ -164,7 +164,7 @@
   position: absolute;
   left: 50%;
   top: 55%;
-  width: min(900px, 80vw);
+  width: min(1180px, 88vw);
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 20;
@@ -187,7 +187,7 @@
   margin-top: clamp(18px, 2vh, 28px);
   color: var(--contact-cream);
   font-family: var(--font-display-serif), "Cormorant Garamond", "Times New Roman", serif;
-  font-size: clamp(62px, 9vw, 170px);
+  font-size: clamp(58px, 8.1vw, 156px);
   font-weight: 400;
   line-height: 0.82;
   letter-spacing: 0;
@@ -355,24 +355,13 @@
   }
 
   .phoneNumber {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    font-size: clamp(52px, 15.5vw, 72px);
+    font-size: clamp(27px, 11vw, 46px);
     line-height: 0.9;
-    white-space: normal;
-  }
-
-  .mobileLineBreak {
-    display: block;
-    flex-basis: 100%;
-    width: 100%;
-    height: 0;
-  }
-
-  .mobileHiddenSpace {
-    display: none;
+    white-space: nowrap;
   }
 
   .officeAddress {

@@ -1,11 +1,4 @@
 .scrollSection {
-  min-height: 100vh;
-  min-height: 100dvh;
-  overflow: hidden;
-  background: #000000;
-}
-
-.stage {
   position: relative;
   height: 100vh;
   height: 100dvh;
@@ -13,450 +6,42 @@
   min-height: 100dvh;
   overflow: hidden;
   background: #000000;
-  isolation: isolate;
 }
 
-.heroScene,
-.heroOverlay,
-.heroContent,
-.redCurtain,
-.fixedNavigation,
-.fixedBrandMark,
-.cornerInterface,
-.centerGuides {
+.sequenceCanvas {
   position: absolute;
   inset: 0;
-}
-
-.heroScene {
-  z-index: 1;
-  background-image: url("/transition/hero.png");
-  background-position: center;
-  background-size: cover;
-}
-
-.heroOverlay {
-  z-index: 2;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.42), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.46)),
-    rgba(0, 0, 0, 0.24);
-}
-
-.heroContent {
-  z-index: 3;
-  display: grid;
-  place-content: center;
-  padding: clamp(24px, 6vw, 88px);
-  text-align: center;
-  color: #fff8ef;
-  font-size: clamp(18px, min(2.05vw, 4.8svh), 34px);
-  font-weight: 800;
-  line-height: 0.92;
-  text-transform: uppercase;
-}
-
-.heroContent p {
-  margin: 0;
-}
-
-.heroContent::before {
-  content: none;
-}
-
-.redCurtain {
-  z-index: 40;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  opacity: 0;
-  visibility: hidden;
-  background:
-    radial-gradient(circle at 20% 18%, rgba(197, 110, 28, 0.2), transparent 24%),
-    radial-gradient(circle at 80% 16%, rgba(255, 255, 255, 0.38), transparent 18%),
-    linear-gradient(135deg, #fff7eb 0%, #f4d1b2 42%, #ffffff 100%);
-  clip-path: inset(100% 49.97% 0% 49.9701%);
-  will-change: clip-path, opacity;
-}
-
-.redCurtain::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.05), transparent 18%, transparent 82%, rgba(0, 0, 0, 0.05)),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.24), transparent 54%);
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-.imageWindow {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  overflow: hidden;
-  background: #15100f;
-  transform: translate(-50%, -50%);
-  transform-origin: center center;
-  will-change: transform, opacity;
-}
-
-.imageWindow img {
-  width: 100%;
-  height: 100%;
   display: block;
-  object-fit: cover;
-  transform-origin: center center;
-  will-change: transform;
+  width: 100%;
+  height: 100%;
+  background: #000000;
 }
 
-.imageWindowOne {
-  z-index: 2;
-  width: min(69vw, 122svh, 1218px);
-  aspect-ratio: 1218 / 674;
-}
-
-.imageWindowTwo {
-  z-index: 3;
-  width: min(42vw, 74svh, 740px);
-  aspect-ratio: 740 / 411;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-.imageWindowThree {
-  z-index: 4;
-  width: min(27vw, 48svh, 476px);
-  aspect-ratio: 476 / 265;
-}
-
-.redTextPanel {
+.heroLogo {
   position: absolute;
-  inset: 0;
-  z-index: 29;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
-  max-width: none;
-  max-height: none;
-  color: #050505;
-  background:
-    radial-gradient(circle at 25% 20%, rgba(198, 123, 39, 0.16), transparent 26%),
-    linear-gradient(145deg, #fffdf8 0%, #f4d1b2 42%, #ffffff 100%);
+  top: clamp(18px, 4vw, 54px);
+  left: 50%;
+  z-index: 2;
+  width: clamp(104px, 10vw, 172px);
   opacity: 0;
   visibility: hidden;
-  overflow: hidden;
-  transform: scale(0.362);
-  transform-origin: 50% 50%;
   pointer-events: none;
+  transform: translateX(-50%);
   will-change: transform, opacity;
 }
 
-.redTextPanel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 28%, rgba(0, 0, 0, 0.04));
-  pointer-events: none;
-}
-
-.redSplitOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.redHalf {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  overflow: hidden;
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.redHalfLeft {
-  left: 0;
-  width: calc(50% + 1px);
-}
-
-.redHalfRight {
-  right: 0;
-  width: calc(50% + 1px);
-}
-
-.redSceneSlice {
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  height: 100%;
-  overflow: hidden;
-  color: #050505;
-  background:
-    radial-gradient(circle at 18% 22%, rgba(204, 123, 35, 0.16), transparent 24%),
-    linear-gradient(145deg, #fffdf8 0%, #f4d1b2 44%, #ffffff 100%);
-}
-
-.redSceneSlice::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 28%, rgba(0, 0, 0, 0.04));
-  pointer-events: none;
-}
-
-.redSceneSliceLeft {
-  left: 0;
-}
-
-.redSceneSliceRight {
-  right: 0;
-}
-
-.redStatementContent {
-  position: absolute;
-  inset: 0;
-  width: 100vw;
-  height: 100%;
-  color: #050505;
-}
-
-.redStatementContent p {
-  margin: 0;
-}
-
-.statementText {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(24px, 5vw, 90px);
-  font-size: clamp(15px, min(1.65vw, 3.6svh), 29px);
-  font-weight: 900;
-  line-height: 0.9;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.redStatementDetails {
-  position: absolute;
-  left: clamp(14px, 2.5vw, 44px);
-  bottom: clamp(14px, 2.5svh, 44px);
-  width: min(24vw, 500px);
-  font-size: clamp(7px, min(0.52vw, 1.2svh), 10px);
-  font-weight: 700;
-  line-height: 1.15;
-  text-transform: uppercase;
-}
-
-.redTextPanel p {
-  margin: 0;
-}
-
-.fixedNavigation {
-  z-index: 28;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 clamp(12px, 3.2vw, 58px);
-  color: #fff8ef;
-  font-size: clamp(7px, min(0.48vw, 1.1svh), 10px);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.fixedNavigation span:nth-child(2) {
-  margin-left: auto;
-  margin-right: 2.2vw;
-}
-
-.fixedBrandMark {
-  z-index: 28;
-  pointer-events: none;
-  top: clamp(18px, 4.2svh, 56px);
-  bottom: auto;
-  right: auto;
-  left: 50%;
-  width: clamp(78px, min(8.5vw, 15svh), 150px);
-  height: auto;
-  display: grid;
-  place-content: center;
-  transform: translateX(-50%);
-}
-
-.fixedBrandMark::after {
-  content: none;
-}
-
-.logoImage {
+.heroLogo img {
   display: block;
   width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-.cornerInterface {
-  z-index: 28;
-  pointer-events: none;
-  top: auto;
-  right: clamp(12px, 3vw, 54px);
-  bottom: clamp(14px, 3svh, 54px);
-  left: auto;
-  width: min(18vw, 290px);
-  height: auto;
-  display: grid;
-  gap: 0.45rem;
-  justify-items: end;
-  color: #fff8ef;
-  font-size: clamp(7px, min(0.52vw, 1.2svh), 10px);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.centerGuides {
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.centerGuides::before,
-.centerGuides::after {
-  position: absolute;
-  content: "";
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.centerGuides::before {
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-}
-
-.centerGuides::after {
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-}
-
-@media (min-width: 700px) and (max-width: 1099px) {
-  .heroContent {
-    font-size: clamp(21px, min(3.2vw, 3.8svh), 30px);
-  }
-
-  .imageWindowOne {
-    width: min(78vw, 86svh);
-  }
-
-  .imageWindowTwo {
-    width: min(52vw, 58svh);
-  }
-
-  .imageWindowThree {
-    width: min(34vw, 38svh);
-  }
-
-  .statementText {
-    font-size: clamp(17px, min(2.4vw, 3svh), 26px);
-  }
-
-  .redStatementDetails {
-    width: min(32vw, 340px);
-  }
-
-  .fixedNavigation {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    gap: 18px;
-    padding: 0 clamp(14px, 2.2vw, 26px);
-    font-size: clamp(7px, 0.95vw, 10px);
-  }
-
-  .fixedNavigation span:nth-child(2) {
-    margin: 0;
-  }
-
-  .fixedNavigation span:first-child {
-    max-width: 110px;
-  }
-}
-
-@media (max-width: 699px) {
-  .heroContent {
-    padding: 28px;
-    font-size: clamp(18px, 5.3vw, 24px);
-  }
-
-  .imageWindowOne {
-    width: min(58vw, 42svh);
-    aspect-ratio: 9 / 16;
-  }
-
-  .imageWindowTwo {
-    width: min(43vw, 32svh);
-    aspect-ratio: 9 / 16;
-  }
-
-  .imageWindowThree {
-    width: min(30vw, 22svh);
-    aspect-ratio: 9 / 16;
-  }
-
-  .imageWindow img {
-    object-fit: contain;
-  }
-
-  .statementText {
-    padding: 28px;
-    font-size: clamp(16px, 4.2vw, 22px);
-  }
-
-  .redStatementDetails {
-    left: 16px;
-    bottom: 16px;
-    width: min(46vw, 190px);
-    font-size: 7px;
-  }
-
-  .fixedNavigation {
-    top: 0;
-    bottom: auto;
-    height: auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: start;
-    gap: 10px;
-    padding: 18px 12px 0;
-    font-size: 7px;
-  }
-
-  .fixedNavigation span:nth-child(2) {
-    margin: 0;
-  }
-
-  .fixedNavigation span:first-child {
-    max-width: 74px;
-  }
-
-  .fixedBrandMark {
+@media (max-width: 641px) {
+  .heroLogo {
     top: 18px;
-    width: clamp(74px, 20vw, 104px);
-  }
-
-  .cornerInterface {
-    right: 12px;
-    bottom: 12px;
-    width: 76px;
-    gap: 0.25rem;
-    font-size: 7px;
-  }
-
-  .debugButtons {
-    grid-template-columns: repeat(4, 1fr);
+    left: 50%;
+    width: clamp(82px, 25vw, 116px);
   }
 }
 
@@ -464,13 +49,5 @@
   .scrollSection {
     min-height: 100vh;
     min-height: 100dvh;
-  }
-
-  .redCurtain {
-    clip-path: inset(0% 0% 0% 0%);
-  }
-
-  .heroContent {
-    opacity: 0;
   }
 }

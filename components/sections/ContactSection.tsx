@@ -268,14 +268,11 @@ export default function ContactSection() {
           <a id="contact-title" href={contactData.phoneHref} className={styles.phoneNumber} aria-label={`Call ${contactData.phoneDisplay}`}>
             {phoneCharacters.map((character, index) => (
               <span key={`${character}-${index}`} className={styles.phoneCharacterGroup}>
-                <span
-                  className={`${styles.phoneCharacterWrapper} ${index === 9 ? styles.mobileHiddenSpace : ""}`}
-                >
+                <span className={styles.phoneCharacterWrapper}>
                   <span className={styles.phoneCharacter} data-phone-character>
                     {character === " " ? "\u00A0" : character}
                   </span>
                 </span>
-                {index === 8 ? <span className={styles.mobileLineBreak} aria-hidden="true" /> : null}
               </span>
             ))}
           </a>

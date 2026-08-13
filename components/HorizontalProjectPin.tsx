@@ -246,6 +246,28 @@ export default function HorizontalProjectPin() {
         });
       });
 
+      const introTimeline = gsap.timeline({
+        defaults: {
+          ease: "power3.out"
+        },
+        scrollTrigger: {
+          id: "project-section-intro-reveal",
+          trigger: section,
+          start: "top bottom",
+          end: "top center",
+          scrub: 0.3,
+          invalidateOnRefresh: true
+        }
+      });
+
+      introTimeline.to(introText, {
+        autoAlpha: 1,
+        y: 0,
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1,
+        stagger: 0.08
+      });
+
       const tl = gsap.timeline({
         defaults: {
           ease: "power3.out"
@@ -259,18 +281,6 @@ export default function HorizontalProjectPin() {
           invalidateOnRefresh: true
         }
       });
-
-      tl.to(
-        introText,
-        {
-          autoAlpha: 1,
-          y: 0,
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 0.12,
-          stagger: 0.025
-        },
-        0.02
-      );
 
       textGroups.forEach((group, index) => {
         const enterAt = 0.14 + index * 0.16;
@@ -300,6 +310,8 @@ export default function HorizontalProjectPin() {
       return () => {
         horizontalTween.scrollTrigger?.kill();
         horizontalTween.kill();
+        introTimeline.scrollTrigger?.kill();
+        introTimeline.kill();
         tl.scrollTrigger?.kill();
         tl.kill();
       };
