@@ -375,57 +375,55 @@
   }
 
   .orbitViewport {
-    position: relative;
-    width: 100%;
-    margin-top: 2rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    pointer-events: auto;
-    padding-bottom: 2rem;
+    position: absolute;
+    inset: 0;
+    z-index: 18;
+    pointer-events: none;
   }
 
   .orbitAnchor {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: max-content;
-    height: auto;
-    transform: none;
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    width: min(120vw, 640px);
+    height: min(120vw, 640px);
+    transform: translate(-50%, -40%);
     pointer-events: none;
   }
 
   .orbitRotator {
-    position: relative;
-    display: flex;
-    gap: 1rem;
-    padding: 0 1rem;
-    transform: none !important;
-    will-change: auto;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: 50% 55%;
+    will-change: transform;
   }
 
   .cardPositioner {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: auto;
-    height: auto;
-    transform: none !important;
-    will-change: auto;
-    flex-shrink: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: rotate(calc(var(--angle) + 90deg)) translateY(var(--orbit-offset));
+    transform-origin: 0 0;
+    will-change: transform, opacity;
   }
 
   .cardVisual {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: clamp(240px, 70vw, 320px);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: clamp(84px, 19vw, 112px);
     aspect-ratio: 3 / 4;
     overflow: hidden;
     background: #e8e8e6;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
     border-radius: 18px;
-    transform: none !important;
-    will-change: auto;
+    transform: translate(-50%, -50%) rotate(var(--visual-rotation));
+    transform-origin: 50% 50%;
+    will-change: transform;
   }
 
   .galleryCard {
@@ -442,18 +440,16 @@
   }
 
   .centralCopy {
-    position: relative;
-    left: auto;
-    top: auto;
+    position: absolute;
+    left: 50%;
+    top: 25%;
     z-index: 30;
-    width: 100%;
-    padding: 0 1rem;
+    width: min(78vw, 310px);
     display: grid;
     gap: 12px;
-    transform: none;
+    transform: translateX(-50%);
     text-align: center;
     pointer-events: auto;
-    margin-top: 1rem;
   }
 
   .centralCopy::before {
@@ -486,24 +482,7 @@
   }
 
   .cardMeta {
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    color: white;
-  }
-
-  .cardMeta strong {
-    display: block;
-    color: white;
-  }
-
-  .cardMeta em {
-    display: block;
-    color: rgba(255, 255, 255, 0.8);
+    display: none;
   }
 
   .mobileCaption {
@@ -545,7 +524,14 @@
   }
 
   .stage::after {
-    display: none;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 22%;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(244, 244, 244, 0.98) 58%, rgba(244, 244, 244, 1) 100%);
   }
 }
 
