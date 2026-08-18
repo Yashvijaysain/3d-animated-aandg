@@ -83,7 +83,12 @@ export async function submitLead(
     });
 
     if (error) {
-      console.error("Supabase lead insert failed:", error.code);
+      console.error("Supabase lead insert failed:", {
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      });
       return { success: false, message: "We couldn't submit your enquiry right now. Please try again or contact us on WhatsApp." };
     }
 

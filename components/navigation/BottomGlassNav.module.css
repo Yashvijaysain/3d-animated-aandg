@@ -243,9 +243,20 @@
 
 @media (max-width: 599px) {
   .glassNav {
-    width: calc(100vw - 20px);
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    width: auto;
     height: 68px;
     bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
+    transform: translateY(20px);
+  }
+
+  .glassNavVisible {
+    transform: translateY(0);
+  }
+
+  .glassNavHidden {
+    transform: translateY(20px);
   }
 
   .navItems {

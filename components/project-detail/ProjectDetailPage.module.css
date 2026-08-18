@@ -891,14 +891,29 @@
   }
 
   .headingWrap {
+    width: 100%;
+    min-width: 0;
     max-width: 10.2ch;
-    font-size: clamp(2.8rem, 12.2vw, 3.8rem);
+    font-size: clamp(2.4rem, 12.2vw, 3.8rem);
     line-height: 0.9;
   }
 
   .heroCopy {
+    min-width: 0;
     max-width: none;
     padding-top: 0;
+  }
+
+  .featureCopy h2,
+  .about h2,
+  .gallery h2,
+  .amenities h2,
+  .floorPlans h2,
+  .location h2,
+  .enquiry h2,
+  .related h2 {
+    font-size: clamp(2.15rem, 10vw, 2.6rem);
+    overflow-wrap: anywhere;
   }
 
   .heroActions a,
