@@ -21,6 +21,7 @@ const leadSchema = z.object({
   utmTerm: z.string().optional(),
   utmContent: z.string().optional(),
   referrer: z.string().optional(),
+  comparedProjects: z.array(z.string().trim().min(1).max(120)).max(3).optional(),
   honeypot: z.string().optional(), // for spam protection
 });
 
@@ -50,6 +51,7 @@ export async function submitLead(
       utmTerm: formData.get("utmTerm"),
       utmContent: formData.get("utmContent"),
       referrer: formData.get("referrer"),
+      comparedProjects: formData.getAll("comparedProjects").map(String),
     };
 
     const validatedData = leadSchema.safeParse(rawData);
@@ -77,6 +79,7 @@ export async function submitLead(
       utm_term: data.utmTerm || null,
       utm_content: data.utmContent || null,
       referrer: data.referrer || null,
+      compared_projects: data.comparedProjects?.length ? data.comparedProjects : null,
     });
 
     if (error) {

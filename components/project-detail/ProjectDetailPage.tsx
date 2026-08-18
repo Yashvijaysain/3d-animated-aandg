@@ -6,8 +6,10 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import type { Project } from "@/data/projects";
+import { projects, type Project } from "@/data/projects";
 import EnquiryForm from "@/components/forms/EnquiryForm";
+import PropertyFinder from "@/components/property-finder/PropertyFinder";
+import CompareButton from "@/components/project-comparison/CompareButton";
 import styles from "./ProjectDetailPage.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -138,6 +140,7 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
             <div className={styles.heroActions} data-hero-actions>
               <a href="#enquiry">Book A Site Visit</a>
               <a href={project.brochureUrl ?? "#floor-plans"}>View Brochure</a>
+              <CompareButton projectSlug={project.slug} />
             </div>
           </aside>
         </div>
@@ -228,6 +231,8 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
         </div>
       </section>
 
+      <PropertyFinder currentProject={project} projects={projects} />
+
       {project.floorPlans?.length ? (
         <section id="floor-plans" className={styles.floorPlans}>
           <span className={styles.eyebrow}>Plans</span>
@@ -264,7 +269,7 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
         </div>
       </section>
 
-      <section id="enquiry" className={styles.enquiry}>
+      <section id="enquiry" className={styles.enquiry} data-compare-bar-avoid>
         <div data-scroll-reveal>
           <span className={styles.eyebrow}>Private Presentation</span>
           <h2>Book A Private Project Presentation</h2>

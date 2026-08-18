@@ -7,6 +7,8 @@ export type Project = {
   fullDescription: string;
   location: string;
   startingPrice: string;
+  startingPriceValue?: number;
+  maxPriceValue?: number;
   configurations: string[];
   status: string;
   possession: string;
@@ -88,6 +90,7 @@ export const projects: Project[] = [
       "Ivory County is located at Plot GH-01, Sector 115, Noida and is promoted by ThemeCounty Pvt. Ltd. County Group describes the project as approximately 28 acres with around 11 acres of landscaping, a 4-acre lagoon and 2,372 living units. The development includes premium 3 and 4 BHK homes under Ivory County and larger ultra-luxury 4 and 5 BHK residences under Ivory Gold. RERA references include promoter registration UPRERAPRM206951 and project phases UPRERAPRJ256314, UPRERAPRJ115902 and UPRERAPRJ507062.",
     location: "Plot GH-01, Sector 115, Noida",
     startingPrice: "From INR 3.6 Cr*",
+    startingPriceValue: 36_000_000,
     configurations: ["3 BHK", "4 BHK", "5 BHK"],
     status: "Under Development",
     possession: "As per phase-wise RERA",

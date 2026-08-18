@@ -69,7 +69,7 @@
 
 .heroGrid {
   position: relative;
-  z-index: 5;
+  z-index: 10;
   display: grid;
   grid-template-columns: minmax(0, 1.06fr) minmax(280px, 0.82fr);
   gap: clamp(2rem, 6vw, 6rem);
@@ -137,6 +137,7 @@
 }
 
 .heroActions a,
+.heroActions button,
 .sectionActions a {
   min-height: 3.2rem;
   display: grid;
@@ -149,6 +150,8 @@
   text-transform: uppercase;
   text-align: center;
   word-wrap: break-word;
+  border: 0;
+  cursor: pointer;
 }
 
 .heroActions a:first-child,
@@ -161,6 +164,12 @@
 .sectionActions a:last-child {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.1);
+}
+
+.heroActions button {
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.34);
 }
 
 .awardNote {
@@ -893,6 +902,7 @@
   }
 
   .heroActions a,
+  .heroActions button,
   .sectionActions a {
     min-height: 44px;
     padding: 0 1rem;

@@ -1,0 +1,389 @@
+.finder {
+  padding: clamp(76px, 8vw, 116px) clamp(22px, 7vw, 76px);
+  color: #1c1a17;
+  background: #eee7da;
+  border-top: 1px solid rgba(83, 69, 43, 0.12);
+}
+
+.finderHeader {
+  max-width: 760px;
+}
+
+.finderHeader > span,
+.resultsHeading > div > span {
+  color: #9a7930;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.finderHeader h2 {
+  margin: 0.8rem 0 0;
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-size: clamp(3rem, 6vw, 6.2rem);
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.finderHeader p {
+  max-width: 620px;
+  margin: 1.25rem 0 0;
+  color: rgba(28, 26, 23, 0.62);
+  font-size: clamp(0.95rem, 1.25vw, 1.12rem);
+  line-height: 1.55;
+}
+
+.finderPanel {
+  width: min(920px, 100%);
+  min-height: 480px;
+  margin: clamp(34px, 5vw, 62px) auto 0;
+  padding: clamp(22px, 4vw, 42px);
+  background: rgba(255, 253, 248, 0.66);
+  border: 1px solid rgba(117, 90, 39, 0.18);
+  border-radius: clamp(22px, 3vw, 34px);
+  box-shadow: 0 30px 80px rgba(86, 67, 34, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.progressRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 16px;
+  color: rgba(28, 26, 23, 0.54);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.progressTrack {
+  height: 2px;
+  overflow: hidden;
+  background: rgba(28, 26, 23, 0.12);
+}
+
+.progressTrack > span {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #9a7930;
+  transform-origin: left;
+  transition: transform 240ms ease;
+}
+
+.questionHeader {
+  margin-top: clamp(34px, 5vw, 54px);
+}
+
+.questionHeader > span {
+  color: rgba(28, 26, 23, 0.4);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.questionHeader h3,
+.resultsHeading h3 {
+  margin: 0.55rem 0 0;
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-size: clamp(2rem, 4.2vw, 3.8rem);
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.questionHeader p,
+.resultsHeading p {
+  color: rgba(28, 26, 23, 0.56);
+}
+
+.optionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.optionGrid button {
+  min-width: 0;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 18px;
+  color: #1c1a17;
+  background: rgba(255, 255, 255, 0.38);
+  border: 1px solid rgba(28, 26, 23, 0.12);
+  border-radius: 18px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.optionGrid button:hover,
+.optionGrid button:focus-visible,
+.optionGrid .optionSelected {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(154, 121, 48, 0.76);
+}
+
+.optionGrid button:focus-visible {
+  outline: 3px solid rgba(154, 121, 48, 0.18);
+}
+
+.optionGrid button span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 0.95rem;
+  font-weight: 780;
+}
+
+.optionGrid button small {
+  color: rgba(28, 26, 23, 0.45);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.optionGrid .optionSelected small {
+  color: #8e6e2d;
+}
+
+.finderNav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.finderNav button,
+.resultsHeading > button {
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.finderNav button:first-child,
+.resultsHeading > button {
+  color: #1c1a17;
+  background: transparent;
+  border: 1px solid rgba(28, 26, 23, 0.2);
+}
+
+.finderNav button:last-child {
+  color: #fff;
+  background: #1c1a17;
+  border: 1px solid #1c1a17;
+}
+
+.finderNav button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.results {
+  margin-top: clamp(34px, 5vw, 62px);
+}
+
+.resultsHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.currentContext {
+  margin: 24px 0 0;
+  padding: 16px 18px;
+  color: rgba(28, 26, 23, 0.68);
+  background: rgba(255, 255, 255, 0.44);
+  border-left: 3px solid #9a7930;
+}
+
+.resultGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.resultCard {
+  min-width: 0;
+  overflow: hidden;
+  background: rgba(255, 253, 248, 0.72);
+  border: 1px solid rgba(117, 90, 39, 0.16);
+  border-radius: 24px;
+}
+
+.resultImage {
+  position: relative;
+  min-height: 240px;
+  display: block;
+  overflow: hidden;
+}
+
+.resultImage img {
+  object-fit: cover;
+}
+
+.resultImage > span {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  padding: 7px 10px;
+  color: #1c1a17;
+  background: rgba(255, 253, 248, 0.88);
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 850;
+}
+
+.resultCopy {
+  padding: 20px;
+}
+
+.resultCopy > span {
+  color: #8e6e2d;
+  font-size: 0.66rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.resultCopy h4 {
+  margin: 0.55rem 0 0;
+  font-family: var(--font-display-serif), Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.resultCopy dl {
+  display: grid;
+  gap: 9px;
+  margin: 18px 0 0;
+}
+
+.resultCopy dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(28, 26, 23, 0.1);
+}
+
+.resultCopy dt,
+.resultCopy dd {
+  font-size: 0.68rem;
+}
+
+.resultCopy dt {
+  color: rgba(28, 26, 23, 0.46);
+  text-transform: uppercase;
+}
+
+.resultCopy dd {
+  margin: 0;
+  font-weight: 750;
+  text-align: right;
+}
+
+.resultCopy > p {
+  min-height: 48px;
+  color: rgba(28, 26, 23, 0.62);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.resultActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.resultActions a,
+.resultActions button {
+  min-height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0 12px;
+  color: #1c1a17;
+  background: transparent;
+  border: 1px solid rgba(28, 26, 23, 0.18);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-weight: 850;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.resultActions a:first-child {
+  color: #fff;
+  background: #1c1a17;
+}
+
+@media (max-width: 1023px) {
+  .resultGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .resultCard {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.72fr) 1fr;
+  }
+}
+
+@media (max-width: 699px) {
+  .finderHeader h2 {
+    font-size: clamp(2.8rem, 13vw, 4.4rem);
+  }
+
+  .finderPanel {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .optionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .optionGrid button {
+    min-height: 70px;
+  }
+
+  .finderNav {
+    position: sticky;
+    bottom: 88px;
+    padding-top: 14px;
+    background: linear-gradient(transparent, rgba(255, 253, 248, 0.96) 28%);
+  }
+
+  .finderNav button {
+    flex: 1;
+    min-height: 48px;
+  }
+
+  .resultsHeading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resultCard {
+    display: block;
+  }
+
+  .resultImage {
+    min-height: 230px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressTrack > span {
+    transition: none;
+  }
+}

@@ -9,6 +9,7 @@ import LoadingScreen from "@/components/loading/LoadingScreen";
 import BottomGlassNav from "@/components/navigation/BottomGlassNav";
 import UtmTracker from "@/components/utm/UtmTracker";
 import Analytics from "@/components/utm/Analytics";
+import CompareExperience from "@/components/project-comparison/CompareExperience";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -123,7 +124,7 @@ export default function RootLayout({
         </Suspense>
         <LenisRoot />
         <LoadingScreen />
-        {children}
+        <CompareExperience>{children}</CompareExperience>
         <BottomGlassNav />
       </body>
     </html>

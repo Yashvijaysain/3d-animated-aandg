@@ -8,9 +8,11 @@ type EnquiryFormProps = {
   projectName: string;
   projectSlug: string;
   sourcePage: string;
+  comparedProjects?: string[];
+  submitLabel?: string;
 };
 
-export default function EnquiryForm({ projectName, projectSlug, sourcePage }: EnquiryFormProps) {
+export default function EnquiryForm({ projectName, projectSlug, sourcePage, comparedProjects = [], submitLabel = "Book Site Visit" }: EnquiryFormProps) {
   const [state, formAction, isPending] = useActionState(submitLead, { success: false, message: "" });
   const [utmData, setUtmData] = useState<Record<string, string>>({});
   const [whatsappUrl, setWhatsappUrl] = useState("");
@@ -28,7 +30,7 @@ export default function EnquiryForm({ projectName, projectSlug, sourcePage }: En
 
     // Fallback WhatsApp URL
     const msg = encodeURIComponent(`Hi, I'm interested in ${projectName}. Please share the current price, availability and site-visit details.`);
-    setWhatsappUrl(`https://wa.me/919654322222?text=${msg}`); // Replace phone number later via env
+    setWhatsappUrl(`https://wa.me/919654322224?text=${msg}`); // Replace phone number later via env
   }, [projectName]);
 
   return (
@@ -36,6 +38,9 @@ export default function EnquiryForm({ projectName, projectSlug, sourcePage }: En
       <input type="hidden" name="projectName" value={projectName} />
       <input type="hidden" name="projectSlug" value={projectSlug} />
       <input type="hidden" name="sourcePage" value={sourcePage} />
+      {comparedProjects.map((comparedProject) => (
+        <input type="hidden" name="comparedProjects" value={comparedProject} key={comparedProject} />
+      ))}
       
       {/* UTM Fields */}
       <input type="hidden" name="utmSource" value={utmData.utm_source || ""} />
@@ -62,7 +67,7 @@ export default function EnquiryForm({ projectName, projectSlug, sourcePage }: En
           {state.message && <div className={styles.errorMessage}>{state.message}</div>}
 
           <button type="submit" disabled={isPending}>
-            {isPending ? "Submitting..." : "Book Site Visit"}
+            {isPending ? "Submitting..." : submitLabel}
           </button>
           
           {state.message && (
