@@ -149,7 +149,7 @@ export default function EditorialBridgeSection() {
             </p>
             <div ref={buttonsRef} className={styles.actions}>
               <Link href="/projects">Explore Projects</Link>
-              <a href="#">Our Approach</a>
+              <a href="/about">Our Approach</a>
             </div>
           </div>
 

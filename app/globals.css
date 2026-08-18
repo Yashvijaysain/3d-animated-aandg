@@ -2,8 +2,7 @@
   color-scheme: dark;
   background: #000000;
   color: #ffffff;
-  --font-heading: Arial, Helvetica, sans-serif;
-  --font-body: Arial, Helvetica, sans-serif;
+  --font-heading: var(--font-body), Arial, Helvetica, sans-serif;
 }
 
 * {
@@ -15,8 +14,8 @@ body {
   max-width: 100%;
   min-height: 100%;
   margin: 0;
-  overflow-x: clip;
   background: #000000;
+  padding-bottom: 110px;
 }
 
 body {
@@ -307,6 +306,9 @@ input {
   text-decoration: none;
   text-transform: uppercase;
   backdrop-filter: blur(14px) saturate(1.18);
+  text-align: center;
+  padding: 0.5rem 1rem;
+  word-wrap: break-word;
 }
 
 .hoverImage {

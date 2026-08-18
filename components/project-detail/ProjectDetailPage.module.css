@@ -1,6 +1,5 @@
 .page {
   min-height: 100vh;
-  overflow-x: clip;
   color: #000000;
   background: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
@@ -64,6 +63,8 @@
   color: #000000 !important;
   background: #ffffff;
   border-radius: 999px;
+  text-align: center;
+  word-wrap: break-word;
 }
 
 .heroGrid {
@@ -140,12 +141,14 @@
   min-height: 3.2rem;
   display: grid;
   place-items: center;
-  padding: 0 1.35rem;
+  padding: 0.5rem 1.35rem;
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 900;
   text-decoration: none;
   text-transform: uppercase;
+  text-align: center;
+  word-wrap: break-word;
 }
 
 .heroActions a:first-child,

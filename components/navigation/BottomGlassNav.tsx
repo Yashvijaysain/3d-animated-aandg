@@ -79,10 +79,10 @@ export default function BottomGlassNav() {
   const effectiveActiveIndex = routeLockedIndex ?? activeIndex;
 
   const navItems: NavItem[] = [
-    { label: "Home", href: "/home#home", icon: HomeIcon },
-    { label: "Projects", href: "/home#projects", icon: Building2Icon },
-    { label: "Gallery", href: "/home#projects-gallery", icon: ImagesIcon },
-    { label: "Contact", href: "/home#contact", icon: MessageCircleIcon },
+    { label: "Home", href: "/", icon: HomeIcon },
+    { label: "Projects", href: "/projects", icon: Building2Icon },
+    { label: "Gallery", href: "/#projects-gallery", icon: ImagesIcon },
+    { label: "Contact", href: "/#contact", icon: MessageCircleIcon },
   ];
 
   useEffect(() => {
@@ -178,7 +178,7 @@ export default function BottomGlassNav() {
     const targetId = item.href.split("#")[1];
     const target = targetId ? document.getElementById(targetId) : null;
 
-    if (target && normalizedPathname === "/home") {
+    if (target && normalizedPathname === "/") {
       event.preventDefault();
       const lenis = (window as LenisWindow).agLenis;
 

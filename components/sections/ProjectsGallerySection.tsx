@@ -62,17 +62,12 @@ export default function ProjectsGallerySection() {
       }
 
       if (isMobileViewport) {
-        gsap.set(cards, {
-          autoAlpha: 0,
-          scale: 0.85,
-          y: 38,
-          transformOrigin: "50% 50%"
-        });
-        gsap.set(copy, { autoAlpha: 0, y: 30 });
+        gsap.set(cards, { autoAlpha: 1, scale: 1, y: 0, clearProps: "transform" });
+        gsap.set(copy, { autoAlpha: 1, y: 0, clearProps: "transform" });
+        gsap.set(orbit, { clearProps: "transform, rotation" });
+        return; // Don't create scroll trigger on mobile
       } else {
-        gsap.set(cards, {
-          autoAlpha: 1
-        });
+        gsap.set(cards, { autoAlpha: 1 });
         gsap.set(copy, { autoAlpha: 1, y: 0 });
       }
 
@@ -90,18 +85,10 @@ export default function ProjectsGallerySection() {
         }
       });
 
-      if (isMobileViewport) {
-        timeline
-          .to(accent, { scaleX: 1, duration: 0.16 }, 0)
-          .to(cards, { autoAlpha: 1, scale: 1, y: 0, duration: 0.72, stagger: 0.08 }, 0)
-          .to(copy, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.04)
-          .to(orbit, { rotation: END_ROTATION, duration: 0.8, force3D: true }, 0.1);
-      } else {
-        timeline
-          .to(accent, { scaleX: 1, duration: 0.16 }, 0)
-          .to(orbit, { rotation: END_ROTATION, duration: 0.68, force3D: true }, 0.28)
-          .to(copy, { y: -8, duration: 0.24 }, 0.72);
-      }
+      timeline
+        .to(accent, { scaleX: 1, duration: 0.16 }, 0)
+        .to(orbit, { rotation: END_ROTATION, duration: 0.68, force3D: true }, 0.28)
+        .to(copy, { y: -8, duration: 0.24 }, 0.72);
 
       return () => {
         timeline.kill();

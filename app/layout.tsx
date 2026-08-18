@@ -1,9 +1,27 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import Script from "next/script";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { LenisRoot } from "@/components/LenisRoot";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 import BottomGlassNav from "@/components/navigation/BottomGlassNav";
+import UtmTracker from "@/components/utm/UtmTracker";
+import Analytics from "@/components/utm/Analytics";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  variable: "--font-display-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://agarwalandgehlot.com"),
@@ -41,7 +59,7 @@ export const metadata: Metadata = {
   applicationName: "A&G Realtors",
   category: "Real Estate",
   alternates: {
-    canonical: "/home"
+    canonical: "/"
   },
   robots: {
     index: true,
@@ -58,7 +76,7 @@ export const metadata: Metadata = {
     title: "A&G Realtors | Luxury Real Estate Advisory",
     description:
       "Explore A&G Realtors' curated portfolio of premium residences and landmark commercial addresses across Delhi-NCR.",
-    url: "/home",
+    url: "/",
     siteName: "A&G Realtors",
     images: ["/ag-logo.png"]
   },
@@ -78,7 +96,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${inter.variable} ${cormorant.variable}`}>
+        <Analytics />
+        <Script id="json-ld" type="application/ld+json" strategy="beforeInteractive">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "RealEstateAgent",
+              "name": "A&G Realtors",
+              "image": "https://agarwalandgehlot.com/ag-logo.png",
+              "url": "https://agarwalandgehlot.com",
+              "telephone": "+919654322222",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Noida",
+                "addressLocality": "Noida",
+                "addressRegion": "UP",
+                "postalCode": "201301",
+                "addressCountry": "IN"
+              }
+            }
+          `}
+        </Script>
+        <Suspense fallback={null}>
+          <UtmTracker />
+        </Suspense>
         <LenisRoot />
         <LoadingScreen />
         {children}

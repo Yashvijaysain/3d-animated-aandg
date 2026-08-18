@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import type { Project } from "@/data/projects";
+import EnquiryForm from "@/components/forms/EnquiryForm";
 import styles from "./ProjectDetailPage.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -269,17 +270,9 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
           <h2>Book A Private Project Presentation</h2>
           <p>Selected project: {project.name}</p>
         </div>
-        <form data-scroll-reveal>
-          <input name="projectName" value={project.name} readOnly aria-label="Selected project" />
-          <input name="projectSlug" value={project.slug} readOnly aria-label="Project slug" />
-          <input name="sourcePage" value={`/projects/${project.slug}`} readOnly aria-label="Source page" />
-          <input name="fullName" placeholder="Full name" />
-          <input name="phone" placeholder="Phone number" />
-          <input name="email" placeholder="Email" />
-          <input name="visitDate" type="date" aria-label="Preferred visit date" />
-          <textarea name="message" placeholder="Message" />
-          <button type="submit">Book Site Visit</button>
-        </form>
+        <div data-scroll-reveal>
+          <EnquiryForm projectName={project.name} projectSlug={project.slug} sourcePage={`/projects/${project.slug}`} />
+        </div>
       </section>
 
       <section className={styles.related}>
