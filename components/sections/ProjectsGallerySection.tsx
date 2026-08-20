@@ -118,11 +118,11 @@ export default function ProjectsGallerySection() {
           <span className={styles.desktopLabel}>Projects Gallery</span>
           <div className={styles.mobileIntro}>
             <span className={styles.mobileBadge}>A&G Project Collection</span>
-            <h1 className={styles.mobileTitle}>
+            <h2 className={styles.mobileTitle}>
               Project
               <br />
               Gallery
-            </h1>
+            </h2>
             <span className={styles.mobileCaption}>Curated Residences · NCR</span>
           </div>
         </header>

@@ -251,7 +251,7 @@ export const projects: Project[] = [
     status: "Completed",
     possession: "Completed around 2016",
     heroImage: "/project-details/cherry building.webp",
-    logo: agLogo,
+    logo: "/logos/cherry-county.png",
     cardImages: ["/project-details/cherry building.webp", "/project-details/cherry garden.jpeg", "/project-details/cherry aminities.jpg"],
     gallery: ["/project-details/cherry building.webp", "/project-details/cherry garden.jpeg", "/project-details/cherry aminities.jpg", "/project-details/cherry map.jpeg"],
     highlights: [
@@ -287,7 +287,7 @@ export const projects: Project[] = [
     status: "Completed",
     possession: "Completed around 2021",
     heroImage: "/project-details/cleo.webp",
-    logo: agLogo,
+    logo: "/logos/cleo county.png",
     cardImages: ["/project-details/cleo building.jpg", "/project-details/cleo garden.jpeg", "/project-details/cleo interior.jpg"],
     gallery: ["/project-details/cleo.webp", "/project-details/cleo building.jpg", "/project-details/cleo garden.jpeg", "/project-details/cleo interior.jpg"],
     highlights: [
@@ -360,7 +360,7 @@ export const projects: Project[] = [
     status: "Completed / Ready Move",
     possession: "Completed / ready-move positioning",
     heroImage: "/project-details/centercourt.png",
-    logo: agLogo,
+    logo: "/logos/the-center-court.png",
     cardImages: ["/project-details/centercourt.png", "/project-details/centercourt.png", "/project-details/centercourt.png"],
     gallery: ["/project-details/centercourt.png"],
     highlights: [
@@ -398,7 +398,7 @@ export const projects: Project[] = [
     status: "Completed",
     possession: "Completed around 2012",
     heroImage: agLogo,
-    logo: agLogo,
+    logo: "/logos/olive-county.png",
     cardImages: [agLogo, agLogo, agLogo],
     gallery: [agLogo],
     highlights: [
@@ -435,7 +435,7 @@ export const projects: Project[] = [
     status: "Completed",
     possession: "Completed around 2011",
     heroImage: "/project-details/olive building.jpg",
-    logo: agLogo,
+    logo: "/logos/orange-county.png",
     cardImages: ["/project-details/olive building.jpg", "/project-details/olive garden.jpg", "/project-details/olive map.jpg"],
     gallery: ["/project-details/olive building.jpg", "/project-details/olive garden.jpg", "/project-details/olive map.jpg"],
     highlights: [
@@ -470,7 +470,7 @@ export const projects: Project[] = [
     status: "Commercial",
     possession: "Under development/current",
     heroImage: "/project-details/courtyard.png",
-    logo: agLogo,
+    logo: "/logos/county-courtyard.png",
     cardImages: ["/project-details/courtyard.png", "/project-details/countycourtyard-commercial.webp", "/project-details/courtyard.png"],
     gallery: ["/project-details/courtyard.png", "/project-details/countycourtyard-commercial.webp"],
     highlights: [

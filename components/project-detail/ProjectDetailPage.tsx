@@ -10,6 +10,7 @@ import { projects, type Project } from "@/data/projects";
 import EnquiryForm from "@/components/forms/EnquiryForm";
 import PropertyFinder from "@/components/property-finder/PropertyFinder";
 import CompareButton from "@/components/project-comparison/CompareButton";
+import BrochureCta from "./BrochureCta";
 import styles from "./ProjectDetailPage.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -98,7 +99,7 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
     <main ref={rootRef} className={styles.page}>
       <section className={styles.hero}>
         <header className={styles.header} data-hero-nav>
-          <Link className={styles.logoLink} href="/home" aria-label="A&G Realtors home">
+          <Link className={styles.logoLink} href="/" aria-label="A&G Realtors home">
             <Image src="/ag-logo.png" alt="A&G" width={420} height={142} priority />
           </Link>
           <nav aria-label="Project detail navigation">
@@ -113,17 +114,18 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
         </header>
 
         <div className={styles.heroGrid}>
-          <div className={styles.headingWrap}>
+          <h1 className={styles.headingWrap}>
+            <span className={styles.visuallyHidden}>{project.name}, {project.location}</span>
             {project.name
               .replace(" ", "\n")
               .split("\n")
               .concat(["Residency"])
               .map((line) => (
-                <span key={line} className={styles.headingLineWrap}>
+                <span key={line} className={styles.headingLineWrap} aria-hidden="true">
                   <span data-heading-line>{line}</span>
                 </span>
               ))}
-          </div>
+          </h1>
 
           <aside className={styles.heroCopy}>
             <p data-hero-copy>{project.shortDescription}</p>
@@ -139,7 +141,13 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
             </dl>
             <div className={styles.heroActions} data-hero-actions>
               <a href="#enquiry">Book A Site Visit</a>
-              <a href={project.brochureUrl ?? "#floor-plans"}>View Brochure</a>
+              <BrochureCta
+                projectName={project.name}
+                projectSlug={project.slug}
+                brochureUrl={project.brochureUrl}
+                mode="view"
+                className={styles.brochureCta}
+              />
               <CompareButton projectSlug={project.slug} />
             </div>
           </aside>
@@ -175,7 +183,13 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
           <p>{project.tagline}</p>
           <div className={styles.sectionActions}>
             <a href="#enquiry">Book A Site Visit</a>
-            <a href={project.brochureUrl ?? "#floor-plans"}>Download Brochure</a>
+            <BrochureCta
+              projectName={project.name}
+              projectSlug={project.slug}
+              brochureUrl={project.brochureUrl}
+              mode="download"
+              className={styles.brochureCta}
+            />
           </div>
         </div>
         <div className={styles.featureGrid}>
@@ -192,8 +206,8 @@ export default function ProjectDetailPage({ project, relatedProjects }: Props) {
       <section className={styles.about} data-scroll-reveal>
         <span className={styles.sectionNumber}>02</span>
         <div>
-          <span className={styles.eyebrow}>About Us</span>
-          <h2>Discover More About {project.name}</h2>
+          <span className={styles.eyebrow}>About the Project</span>
+          <h2>About {project.name}</h2>
         </div>
         <p>{project.fullDescription}</p>
       </section>

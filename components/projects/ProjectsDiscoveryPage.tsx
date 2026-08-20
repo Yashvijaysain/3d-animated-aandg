@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -55,6 +55,15 @@ const categories = [
   }
 ];
 
+type ProjectsDiscoveryPageProps = {
+  initialFilters: {
+    location: string;
+    type: string;
+    budget: string;
+    category: string;
+  };
+};
+
 function parseStartingPrice(price: string) {
   const raw = price
     .replace(/₹|INR|inr|Cr|CR|cr|From|from|\s|,/g, "")
@@ -63,23 +72,14 @@ function parseStartingPrice(price: string) {
   return Number.isFinite(value) ? value : null;
 }
 
-export default function ProjectsDiscoveryPage() {
+export default function ProjectsDiscoveryPage({ initialFilters }: ProjectsDiscoveryPageProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const pageRef = useRef<HTMLElement | null>(null);
 
-  const [locationFilter, setLocationFilter] = useState(
-    searchParams.get("location") ?? ""
-  );
-  const [typeFilter, setTypeFilter] = useState(
-    searchParams.get("type") ?? ""
-  );
-  const [budgetFilter, setBudgetFilter] = useState(
-    searchParams.get("budget") ?? ""
-  );
-  const [categoryFilter, setCategoryFilter] = useState(
-    searchParams.get("category") ?? ""
-  );
+  const [locationFilter, setLocationFilter] = useState(initialFilters.location);
+  const [typeFilter, setTypeFilter] = useState(initialFilters.type);
+  const [budgetFilter, setBudgetFilter] = useState(initialFilters.budget);
+  const [categoryFilter, setCategoryFilter] = useState(initialFilters.category);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   const availableLocations = useMemo(
@@ -410,29 +410,32 @@ export default function ProjectsDiscoveryPage() {
           <div className={styles.featuredGrid}>
             {filteredProjects.length > 0 ? (
               filteredProjects.map((project) => (
-                <Link key={project.slug} href={`/projects/${project.slug}`} className={styles.projectCard}>
-                  <div className={styles.projectImageWrap}>
-                    <Image
-                      src={project.heroImage}
-                      alt={project.name}
-                      fill
-                      sizes="(min-width: 1200px) 280px, (min-width: 700px) 40vw, 90vw"
-                    />
-                  </div>
-                  <div className={styles.projectBody}>
-                    <div className={styles.projectBadge}>{project.status}</div>
-                    <h3>{project.name}</h3>
-                    <p>{project.shortDescription}</p>
-                    <div className={styles.projectMeta}>
-                      <span>{project.location}</span>
-                      <span>{project.configurations[0]}</span>
+                <article key={project.slug} className={styles.projectArticle}>
+                  <Link href={`/projects/${project.slug}`} className={styles.projectCard}>
+                    <div className={styles.projectImageWrap}>
+                      <Image
+                        src={project.heroImage}
+                        alt={`${project.name} by ${project.developer} in ${project.location}`}
+                        fill
+                        sizes="(min-width: 1200px) 280px, (min-width: 700px) 40vw, 90vw"
+                      />
                     </div>
-                    <div className={styles.cardFooter}>
-                      <span>{project.startingPrice}</span>
-                      <span className={styles.cardArrow}>VIEW PROJECT →</span>
+                    <div className={styles.projectBody}>
+                      <div className={styles.projectBadge}>{project.status}</div>
+                      <h3>{project.name}</h3>
+                      <p>{project.shortDescription}</p>
+                      <div className={styles.projectMeta}>
+                        <span>{project.developer}</span>
+                        <span>{project.location}</span>
+                        <span>{project.configurations.join(", ")}</span>
+                      </div>
+                      <div className={styles.cardFooter}>
+                        <span>{project.startingPrice}</span>
+                        <span className={styles.cardArrow}>VIEW PROJECT →</span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </article>
               ))
             ) : (
               <div className={styles.emptyState}>

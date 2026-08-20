@@ -68,6 +68,12 @@ function getActiveIndex(pathname: string) {
   return 0;
 }
 
+function getHashIndex(hash: string) {
+  if (hash === "#projects-gallery") return 2;
+  if (hash === "#contact") return 3;
+  return 0;
+}
+
 export default function BottomGlassNav() {
   const pathname = usePathname();
   const normalizedPathname = pathname?.replace(/\/$/, "") || "/";
@@ -75,7 +81,7 @@ export default function BottomGlassNav() {
   const [isLoaderVisible, setIsLoaderVisible] = useState(true);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 599px)").matches;
-  const routeLockedIndex = normalizedPathname.startsWith("/projects") && normalizedPathname !== "/projects" ? 1 : null;
+  const routeLockedIndex = normalizedPathname.startsWith("/projects") ? 1 : null;
   const effectiveActiveIndex = routeLockedIndex ?? activeIndex;
 
   const navItems: NavItem[] = [
@@ -84,6 +90,23 @@ export default function BottomGlassNav() {
     { label: "Gallery", href: "/#projects-gallery", icon: ImagesIcon },
     { label: "Contact", href: "/#contact", icon: MessageCircleIcon },
   ];
+
+  useEffect(() => {
+    const syncActiveRoute = () => {
+      setActiveIndex(
+        normalizedPathname === "/" ? getHashIndex(window.location.hash) : getActiveIndex(normalizedPathname),
+      );
+    };
+
+    syncActiveRoute();
+    window.addEventListener("hashchange", syncActiveRoute);
+    window.addEventListener("popstate", syncActiveRoute);
+
+    return () => {
+      window.removeEventListener("hashchange", syncActiveRoute);
+      window.removeEventListener("popstate", syncActiveRoute);
+    };
+  }, [normalizedPathname]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -174,7 +197,8 @@ export default function BottomGlassNav() {
     return () => observer.disconnect();
   }, [pathname]);
 
-  const handleClick = (event: MouseEvent<HTMLAnchorElement>, item: NavItem) => {
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>, item: NavItem, index: number) => {
+    setActiveIndex(index);
     const targetId = item.href.split("#")[1];
     const target = targetId ? document.getElementById(targetId) : null;
 
@@ -212,7 +236,7 @@ export default function BottomGlassNav() {
               key={item.label}
               href={item.href}
               className={`${styles.navItem} ${isActive ? styles.navItemActive : ""}`}
-              onClick={(event) => handleClick(event, item)}
+              onClick={(event) => handleClick(event, item, index)}
               aria-current={isActive ? "page" : undefined}
               tabIndex={isHidden ? -1 : 0}
             >

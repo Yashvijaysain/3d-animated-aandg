@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import ProjectsDiscoveryPage from "@/components/projects/ProjectsDiscoveryPage";
 
 export const metadata: Metadata = {
-  title: "Luxury Projects in Noida & Gurugram",
+  title: {
+    absolute: "Premium Projects in Noida & Gurugram | Agarwal & Gehlot Realtors"
+  },
   description:
-    "Explore A&G's curated collection of premium residential projects across Noida, Greater Noida and Gurugram.",
+    "Explore premium residential and commercial real estate projects in Noida, Greater Noida and Gurugram with Agarwal & Gehlot Realtors.",
   keywords: [
     "luxury projects Noida",
     "premium residential projects NCR",
@@ -32,10 +33,25 @@ export const metadata: Metadata = {
   }
 };
 
-export default function ProjectsPage() {
+type ProjectsPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+function firstParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
+  const params = await searchParams;
+
   return (
-    <Suspense fallback={null}>
-      <ProjectsDiscoveryPage />
-    </Suspense>
+    <ProjectsDiscoveryPage
+      initialFilters={{
+        location: firstParam(params.location),
+        type: firstParam(params.type),
+        budget: firstParam(params.budget),
+        category: firstParam(params.category)
+      }}
+    />
   );
 }

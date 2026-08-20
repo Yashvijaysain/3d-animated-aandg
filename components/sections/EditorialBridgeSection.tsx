@@ -142,7 +142,7 @@ export default function EditorialBridgeSection() {
       <div className={styles.stage}>
         <div ref={editorialSceneRef} className={styles.editorialScene}>
           <div className={styles.editorialCopy}>
-            <span className={styles.kicker}>Curated Real Estate</span>
+            <h1 className={styles.kicker}>Premium Real Estate Advisory in Noida &amp; Gurugram</h1>
             <h2 ref={headingRef}>Spaces Designed Around Your Life</h2>
             <p ref={paragraphRef}>
               Discover a carefully selected portfolio of premium residences where architecture, location and long-term value come together.

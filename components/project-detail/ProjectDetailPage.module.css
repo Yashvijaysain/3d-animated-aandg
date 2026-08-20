@@ -78,11 +78,24 @@
 
 .headingWrap {
   max-width: 10.4ch;
+  margin: 0;
   font-size: clamp(3.8rem, 7.35vw, 6.95rem);
   font-weight: 900;
   line-height: 0.88;
   letter-spacing: 0;
   text-transform: uppercase;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .headingLineWrap {
@@ -138,7 +151,8 @@
 
 .heroActions a,
 .heroActions button,
-.sectionActions a {
+.sectionActions a,
+.sectionActions button {
   min-height: 3.2rem;
   display: grid;
   place-items: center;
@@ -160,8 +174,7 @@
   background: #b28e3b;
 }
 
-.heroActions a:last-child,
-.sectionActions a:last-child {
+.heroActions .brochureCta {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.1);
 }
@@ -333,7 +346,7 @@
   background: #000000;
 }
 
-.sectionActions a:last-child {
+.sectionActions .brochureCta {
   color: #000000;
   background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.22);
@@ -918,7 +931,8 @@
 
   .heroActions a,
   .heroActions button,
-  .sectionActions a {
+  .sectionActions a,
+  .sectionActions button {
     min-height: 44px;
     padding: 0 1rem;
     font-size: 0.68rem;
