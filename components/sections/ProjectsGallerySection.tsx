@@ -209,7 +209,6 @@ export default function ProjectsGallerySection() {
                           alt={image.alt}
                           fill
                           sizes="(min-width: 1200px) 190px, 150px"
-                          priority={index < 3}
                         />
                         <span className={styles.cardMeta}>
                           <strong>{image.projectName}</strong>

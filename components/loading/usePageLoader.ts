@@ -17,7 +17,7 @@ declare global {
   }
 }
 
-export const REPLAY_ON_REFRESH = true;
+export const REPLAY_ON_REFRESH = false;
 
 function preloadImage(src: string) {
   return new Promise<void>((resolve) => {
@@ -215,6 +215,7 @@ export function usePageLoader() {
 
       waitForReady().then(() => {
         if (timelineRef.current === tl) {
+          tl.timeScale(2.4);
           tl.play(0);
         }
       });

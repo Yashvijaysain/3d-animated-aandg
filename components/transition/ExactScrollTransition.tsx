@@ -58,27 +58,75 @@ export default function ExactScrollTransition() {
     }
 
     let disposed = false;
+    let loadGeneration = 0;
+    let frameBatchTimer: number | undefined;
     const images = imagesRef.current;
 
     const loadFrames = (usePhoneFrames: boolean) => {
+      loadGeneration += 1;
+      const generation = loadGeneration;
       images.length = 0;
+      window.clearTimeout(frameBatchTimer);
 
-      for (let frame = 1; frame <= FRAME_COUNT; frame += 1) {
+      const loadFrame = (frame: number) => {
         const image = new Image();
         image.decoding = "async";
         image.src = getFrameSrc(frame, usePhoneFrames);
         image.onload = () => {
-          if (!disposed) {
+          if (!disposed && generation === loadGeneration) {
             renderFrame(activeFrameRef.current);
           }
         };
         images[frame] = image;
+      };
+
+      loadFrame(1);
+
+      let nextFrame = 2;
+      const loadNextBatch = () => {
+        if (disposed || generation !== loadGeneration) {
+          return;
+        }
+
+        const batchEnd = Math.min(nextFrame + 5, FRAME_COUNT + 1);
+
+        while (nextFrame < batchEnd) {
+          loadFrame(nextFrame);
+          nextFrame += 1;
+        }
+
+        if (nextFrame <= FRAME_COUNT) {
+          frameBatchTimer = window.setTimeout(loadNextBatch, 350);
+        }
+      };
+
+      if (document.readyState === "complete") {
+        frameBatchTimer = window.setTimeout(loadNextBatch, 500);
+      } else {
+        window.addEventListener("load", loadNextBatch, { once: true });
       }
     };
 
     const renderFrame = (frame: number) => {
       activeFrameRef.current = Math.min(FRAME_COUNT, Math.max(1, frame));
-      const image = images[activeFrameRef.current];
+      let image = images[activeFrameRef.current];
+
+      if (!image?.complete || image.naturalWidth === 0) {
+        for (let distance = 1; distance < FRAME_COUNT; distance += 1) {
+          const previousImage = images[activeFrameRef.current - distance];
+          const nextImage = images[activeFrameRef.current + distance];
+
+          if (previousImage?.complete && previousImage.naturalWidth > 0) {
+            image = previousImage;
+            break;
+          }
+
+          if (nextImage?.complete && nextImage.naturalWidth > 0) {
+            image = nextImage;
+            break;
+          }
+        }
+      }
 
       if (!image?.complete || image.naturalWidth === 0) {
         return;
@@ -115,6 +163,8 @@ export default function ExactScrollTransition() {
 
     return () => {
       disposed = true;
+      loadGeneration += 1;
+      window.clearTimeout(frameBatchTimer);
       renderFrameRef.current = null;
       window.removeEventListener("resize", setCanvasSize);
     };
