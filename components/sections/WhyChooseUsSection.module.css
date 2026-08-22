@@ -445,8 +445,11 @@
     left: auto;
     top: auto;
     width: 100%;
+    max-width: none;
+    max-height: none;
     min-height: 190px;
     padding: 1.35rem;
+    box-sizing: border-box;
     text-align: left;
     border: 1px solid rgba(178, 142, 59, 0.24);
     border-radius: 24px;

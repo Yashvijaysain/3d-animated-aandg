@@ -17,6 +17,9 @@ const START_ANGLE = 202;
 const END_ANGLE = 338;
 const SCROLL_DISTANCE_MULTIPLIER = 3.2;
 const galleryImages = Array.from(new Map(projectGallery.map((item) => [item.id, item])).values()).slice(0, 9);
+const mobileGalleryColumns = Array.from({ length: 3 }, (_, columnIndex) =>
+  galleryImages.filter((_, imageIndex) => imageIndex % 3 === columnIndex)
+);
 
 function getCardAngle(index: number, total: number) {
   if (total <= 1) {
@@ -46,11 +49,72 @@ export default function ProjectsGallerySection() {
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const isMobileViewport = window.matchMedia("(max-width: 767px)").matches;
-      const cards = gsap.utils.toArray<HTMLElement>("[data-gallery-card]");
+      const selector = gsap.utils.selector(section);
+      const cards = selector("[data-gallery-card]") as HTMLElement[];
 
       gsap.set(section, { autoAlpha: 1 });
       gsap.set(orbit, { rotation: START_ROTATION, transformOrigin: "50% 50%", force3D: true });
       gsap.set(accent, { autoAlpha: 1, scaleX: 0, transformOrigin: "50% 50%" });
+
+      if (isMobileViewport) {
+        const columns = selector("[data-mobile-columns]")[0] as HTMLElement | undefined;
+        const animatedColumns = selector("[data-mobile-column]") as HTMLElement[];
+
+        gsap.set([copy, accent], { autoAlpha: 1, clearProps: "transform" });
+        gsap.set(accent, { scaleX: 1 });
+
+        if (reduceMotion) {
+          return;
+        }
+
+        if (!columns || animatedColumns.length !== 3) {
+          return;
+        }
+
+        columns.style.overflowY = "hidden";
+        const mobileTimeline = gsap.timeline({
+          scrollTrigger: {
+            id: "mobile-project-columns",
+            trigger: section,
+            start: "top top",
+            end: () => `+=${Math.round(window.innerHeight * 1.8)}`,
+            pin: true,
+            scrub: 0.3,
+            anticipatePin: 1,
+            invalidateOnRefresh: true
+          }
+        });
+
+        animatedColumns.forEach((column) => {
+          const isReverse = column.hasAttribute("data-mobile-column-reverse");
+
+          if (isReverse) {
+            column.style.flexDirection = "column-reverse";
+          }
+
+          const getTravel = () => Math.max(column.scrollHeight - columns.clientHeight, window.innerHeight * 0.34);
+
+          mobileTimeline.fromTo(
+            column,
+            { y: () => (isReverse ? -getTravel() : getTravel()) },
+            {
+              y: () => (isReverse ? getTravel() : -getTravel()),
+              ease: "none"
+            },
+            0
+          );
+        });
+
+        return () => {
+          mobileTimeline.scrollTrigger?.kill();
+          mobileTimeline.kill();
+          animatedColumns.forEach((column) => {
+            column.style.removeProperty("flex-direction");
+            column.style.removeProperty("transform");
+          });
+          columns.style.removeProperty("overflow-y");
+        };
+      }
 
       if (reduceMotion) {
         gsap.set([cards, copy, accent], {
@@ -61,20 +125,10 @@ export default function ProjectsGallerySection() {
         return;
       }
 
-      if (isMobileViewport) {
-        gsap.set(cards, {
-          autoAlpha: 0,
-          scale: 0.85,
-          y: 38,
-          transformOrigin: "50% 50%"
-        });
-        gsap.set(copy, { autoAlpha: 0, y: 30 });
-      } else {
-        gsap.set(cards, {
-          autoAlpha: 1
-        });
-        gsap.set(copy, { autoAlpha: 1, y: 0 });
-      }
+      gsap.set(cards, {
+        autoAlpha: 1
+      });
+      gsap.set(copy, { autoAlpha: 1, y: 0 });
 
       const timeline = gsap.timeline({
         defaults: { ease: "power3.out" },
@@ -90,18 +144,10 @@ export default function ProjectsGallerySection() {
         }
       });
 
-      if (isMobileViewport) {
-        timeline
-          .to(accent, { scaleX: 1, duration: 0.16 }, 0)
-          .to(cards, { autoAlpha: 1, scale: 1, y: 0, duration: 0.72, stagger: 0.08 }, 0)
-          .to(copy, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.04)
-          .to(orbit, { rotation: END_ROTATION, duration: 0.8, force3D: true }, 0.1);
-      } else {
-        timeline
-          .to(accent, { scaleX: 1, duration: 0.16 }, 0)
-          .to(orbit, { rotation: END_ROTATION, duration: 0.68, force3D: true }, 0.28)
-          .to(copy, { y: -8, duration: 0.24 }, 0.72);
-      }
+      timeline
+        .to(accent, { scaleX: 1, duration: 0.16 }, 0)
+        .to(orbit, { rotation: END_ROTATION, duration: 0.68, force3D: true }, 0.28)
+        .to(copy, { y: -8, duration: 0.24 }, 0.72);
 
       return () => {
         timeline.kill();
@@ -176,6 +222,37 @@ export default function ProjectsGallerySection() {
               })}
             </div>
           </div>
+        </div>
+
+        <div className={styles.mobileColumns} aria-label="Project gallery" data-mobile-columns>
+          {mobileGalleryColumns.map((column, columnIndex) => (
+            <div
+              className={`${styles.mobileColumn} ${columnIndex !== 1 ? styles.mobileColumnReverse : ""}`}
+              key={columnIndex}
+              data-mobile-column
+              {...(columnIndex !== 1 ? { "data-mobile-column-reverse": true } : {})}
+            >
+              {column.map((image) => (
+                <Link
+                  className={styles.mobileColumnItem}
+                  href={`/projects/${image.projectSlug}`}
+                  aria-label={`${image.projectName} ${image.category} gallery image`}
+                  key={image.id}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="33vw"
+                  />
+                  <span>
+                    <strong>{image.projectName}</strong>
+                    <em>{image.category}</em>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          ))}
         </div>
 
         <div ref={copyRef} className={styles.centralCopy}>

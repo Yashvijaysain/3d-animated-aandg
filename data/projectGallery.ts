@@ -54,12 +54,12 @@ export const projectGallery: GalleryImage[] = [
     category: "Landscape"
   },
   {
-    id: "jade-sitting",
-    src: "/project-details/jade sitting.jpg",
-    alt: "Jade County outdoor sitting amenity",
-    projectName: "Jade County",
-    projectSlug: "jade-county",
-    category: "Amenities"
+    id: "ivory-sitting",
+    src: "/project-details/ivory sitting.jpg",
+    alt: "Ivory County outdoor sitting amenity",
+    projectName: "Ivory County",
+    projectSlug: "ivory-county",
+    category: "Lifestyle"
   },
   {
     id: "ivory-garden",
@@ -111,7 +111,7 @@ export const projectGallery: GalleryImage[] = [
   },
   {
     id: "center-court",
-    src: "/project-details/centercourt.png",
+    src: "/project-details/center court.webp",
     alt: "Center Court Gurugram residential development",
     projectName: "Center Court",
     projectSlug: "center-court",
