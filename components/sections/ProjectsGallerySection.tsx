@@ -81,7 +81,7 @@ export default function ProjectsGallerySection() {
             pin: true,
             scrub: 0.3,
             anticipatePin: 1,
-            invalidateOnRefresh: true
+            invalidateOnRefresh: truebB
           }
         });
 

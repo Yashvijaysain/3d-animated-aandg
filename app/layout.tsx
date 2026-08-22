@@ -10,6 +10,7 @@ import BottomGlassNav from "@/components/navigation/BottomGlassNav";
 import UtmTracker from "@/components/utm/UtmTracker";
 import Analytics from "@/components/utm/Analytics";
 import CompareExperience from "@/components/project-comparison/CompareExperience";
+import MusicToggle from "@/components/music/MusicToggle";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -126,6 +127,7 @@ export default function RootLayout({
         <LoadingScreen />
         <CompareExperience>{children}</CompareExperience>
         <BottomGlassNav />
+        <MusicToggle />
       </body>
     </html>
   );

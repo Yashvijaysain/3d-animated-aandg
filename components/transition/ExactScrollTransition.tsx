@@ -10,14 +10,14 @@ import styles from "./ExactScrollTransition.module.css";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const FRAME_COUNT = 300;
-const DESKTOP_FRAME_PATH = "/transition/ezgif-frame-";
-const PHONE_FRAME_PATH = "/transition_phone/ezgif-frame-";
+const DESKTOP_FRAME_PATH = "/transition_webp/ezgif-frame-";
+const PHONE_FRAME_PATH = "/transition_phone_webp/ezgif-frame-";
 const PHONE_BREAKPOINT = 642;
 
 const getFrameSrc = (frame: number, usePhoneFrames: boolean) => {
   const path = usePhoneFrames ? PHONE_FRAME_PATH : DESKTOP_FRAME_PATH;
 
-  return `${path}${String(frame).padStart(3, "0")}.png`;
+  return `${path}${String(frame).padStart(3, "0")}.webp`;
 };
 
 const drawCover = (
@@ -217,7 +217,7 @@ export default function ExactScrollTransition() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${window.innerHeight * 5}`,
+          end: () => `+=${window.innerHeight * 6}`,
           pin: true,
           scrub: 0.45,
           anticipatePin: 0.2,

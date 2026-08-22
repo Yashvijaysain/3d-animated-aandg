@@ -1,0 +1,81 @@
+.wrapper {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(22px, calc(env(safe-area-inset-bottom) + 14px));
+  z-index: 910;
+}
+
+.toggle {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  gap: 1px;
+  padding: 7px;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(18, 18, 18, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.toggle svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.toggle span {
+  font-size: 8px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.playing {
+  color: #ffffff;
+  background: rgba(178, 142, 59, 0.68);
+  border-color: rgba(255, 255, 255, 0.48);
+}
+
+@media (max-width: 760px) {
+  .wrapper {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(88px, calc(env(safe-area-inset-bottom) + 82px));
+  }
+
+  .toggle {
+    width: 48px;
+    height: 48px;
+    padding: 6px;
+  }
+
+  .toggle svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle {
+    transition: none;
+  }
+}
